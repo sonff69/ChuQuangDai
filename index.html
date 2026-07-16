@@ -4,57 +4,81 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chu Quang Đại Portfolio</title>
-    <!-- Nhúng Font hỗ trợ tiếng Việt hoàn hảo nhất -->
-    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- Nhúng Font chữ hiển thị chuẩn chỉ dấu tiếng Việt -->
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Quicksand:wght@600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --color-wood-dark: #322214;
-            --color-wood-light: #704c2c;
-            --color-wood-cream: #fbf6ec;
-            --color-gold: #e29c33;
-            --color-glow: #ffdf9e;
+            --color-wood-dark: #2c1e12;
+            --color-wood-light: #6a4c33;
+            --color-wood-cream: #f4edd8;
+            --color-gold: #c68923;
+            --color-glow: #ffd685;
             --color-leaf-dark: #385d1e;
             --color-leaf-bright: #629c36;
-            --color-glass-dark: rgba(30, 21, 13, 0.75);
-            --color-glass-light: rgba(251, 246, 236, 0.9);
-            --font-main: 'Be Vietnam Pro', sans-serif;
-            --font-accent: 'Quicksand', sans-serif;
-            --pixel-shadow: 4px 4px 0px #1e150d;
+            --color-glass: rgba(30, 21, 13, 0.75);
+            --color-text-dark: #2c1d11;
+            --color-text-light: #ebdcb9;
+            --mc-border-dark: #3c3c3c;
+            --mc-border-light: #dbdbdb;
+            --mc-btn-bg: #8f8f8f;
+            --transition-speed: 0.3s;
+        }
+
+        .night-mode {
+            --color-wood-cream: #282f35;
+            --color-glow: #67ff9e;
+            --color-leaf-bright: #3c9c6f;
+            --color-text-dark: #ebdcb9;
+            --color-text-light: #a4b3be;
+            --color-glass: rgba(15, 20, 25, 0.85);
+            --color-wood-dark: #12181d;
+            --color-wood-light: #3d4f5d;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M0 0h2v2H0zm2 2h2v2H2zm2 2h2v2H4zm2 2h2v2H6zm2 2h2v2H8zm2 2h2v2h-2zm2 2h2v2h-2zm2 2h2v2h-2z' fill='%23ffdf9e'/%3E%3C/svg%3E"), auto;
+            user-select: none;
+            cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M0 0h4v4H0zm4 4h4v4H4zm4 4h4v4H8zm4 4h4v4h-4zm4 4h4v4h-4zm4 4h4v4h-4z' fill='%23ffffff' stroke='%23000000' stroke-width='2'/%3E%3C/svg%3E"), auto;
         }
 
         body {
-            font-family: var(--font-main);
+            font-family: 'Be Vietnam Pro', sans-serif;
             background: #110d0a;
-            color: var(--color-wood-dark);
+            color: var(--color-text-dark);
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
+            transition: background var(--transition-speed), color var(--transition-speed);
         }
 
-        /* Ambient Background */
+        /* Ambient Dynamic Background & Sunbeams */
         .bg-layer {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background-image: linear-gradient(rgba(26, 17, 10, 0.45), rgba(26, 17, 10, 0.75)), url('back.jpg');
+            background-image: linear-gradient(rgba(26, 17, 10, 0.4), rgba(26, 17, 10, 0.7)), url('back.jpg');
             background-size: cover;
             background-position: center;
             z-index: -2;
-            filter: blur(0.5px);
+            transition: filter var(--transition-speed);
+        }
+
+        .night-mode .bg-layer {
+            filter: hue-rotate(140deg) brightness(0.4) saturate(0.8);
         }
 
         .dreamy-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 80% 20%, rgba(255, 223, 158, 0.22) 0%, rgba(0,0,0,0) 80%);
+            background: radial-gradient(circle at 80% 20%, rgba(255, 214, 133, 0.22) 0%, rgba(0,0,0,0) 80%);
             z-index: -1;
             pointer-events: none;
+            transition: background var(--transition-speed);
+        }
+
+        .night-mode .dreamy-overlay {
+            background: radial-gradient(circle at 80% 20%, rgba(103, 255, 158, 0.12) 0%, rgba(0,0,0,0) 80%);
         }
 
         #particle-canvas {
@@ -74,17 +98,69 @@
             gap: 28px;
         }
 
-        /* Minecraft Styled Header */
-        header {
-            background: var(--color-glass-dark);
+        /* Day/Night Interactive Lever */
+        .lever-container {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 12px;
+            padding-right: 10px;
+        }
+
+        .mc-sign {
+            background: #90633b;
             border: 4px solid var(--color-wood-dark);
-            border-radius: 8px;
+            border-radius: 4px;
+            padding: 6px 12px;
+            color: #fff;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            box-shadow: 0 4px 0px rgba(0,0,0,0.4);
+            text-shadow: 1.5px 1.5px 0px #000;
+        }
+
+        .mc-lever {
+            width: 32px;
+            height: 48px;
+            background: #404040;
+            border: 3px solid #1a1a1a;
+            position: relative;
+            cursor: pointer;
+            box-shadow: inset -2px -2px 0px #222;
+        }
+
+        .mc-handle {
+            width: 8px;
+            height: 24px;
+            background: #9c9c9c;
+            border: 2px solid #555;
+            position: absolute;
+            top: 4px;
+            left: 50%;
+            transform: translateX(-50%) rotate(25deg);
+            transform-origin: bottom center;
+            transition: transform 0.15s ease;
+            box-shadow: inset -1px -1px 0px #333;
+        }
+
+        .night-mode .mc-handle {
+            transform: translateX(-50%) rotate(-25deg);
+            background: #ff5555;
+            border-color: #aa0000;
+        }
+
+        /* Minecraft Style Profile Header */
+        header {
+            background: var(--color-glass);
+            border: 6px solid var(--color-wood-dark);
+            border-radius: 4px;
             padding: 30px;
             display: flex;
             align-items: center;
             gap: 28px;
             backdrop-filter: blur(10px);
-            box-shadow: var(--pixel-shadow);
+            box-shadow: 0 10px 0px rgba(0,0,0,0.5);
             position: relative;
             overflow: hidden;
             animation: float 6s ease-in-out infinite;
@@ -95,207 +171,192 @@
             50% { transform: translateY(-6px); }
         }
 
-        .vine-deco {
-            position: absolute;
-            top: 0;
-            right: 40px;
-            width: 50px;
-            height: 100px;
-            background: linear-gradient(to bottom, var(--color-leaf-bright), transparent);
-            clip-path: polygon(10% 0%, 30% 40%, 20% 60%, 50% 100%, 80% 60%, 70% 40%, 90% 0%);
-            opacity: 0.6;
-            animation: sway 5s ease-in-out infinite alternate;
-            transform-origin: top center;
-        }
-
-        @keyframes sway {
-            0% { transform: rotate(-6deg); }
-            100% { transform: rotate(6deg); }
-        }
-
         .avatar-wrapper {
             position: relative;
             width: 125px;
             height: 125px;
             flex-shrink: 0;
             border: 4px solid var(--color-wood-dark);
-            border-radius: 6px;
-            overflow: hidden;
             background: #20150d;
+            box-shadow: inset -4px -4px 0px #110d0a;
         }
 
         .avatar-img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-
-        .avatar-wrapper:hover .avatar-img {
-            transform: scale(1.1) rotate(2deg);
+            image-rendering: pixelated;
         }
 
         .profile-info {
-            color: #ebdcb9;
+            color: var(--color-text-light);
             display: flex;
             flex-direction: column;
             gap: 6px;
         }
 
-        /* Minecraft Style Titles with perfect Vietnamese diacritics */
         .pixel-title-text {
-            font-family: var(--font-accent);
-            font-size: 26px;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 28px;
             font-weight: 800;
             color: var(--color-glow);
-            text-shadow: 2.5px 2.5px 0px #1e150d;
+            text-shadow: 3px 3px 0px var(--color-wood-dark);
             letter-spacing: 0.5px;
         }
 
         .tag-container {
             display: flex;
             flex-wrap: wrap;
-            gap: 6px;
+            gap: 8px;
             margin-top: 4px;
         }
 
         .tag {
-            background: rgba(112, 76, 44, 0.5);
-            border: 2px solid var(--color-wood-dark);
-            border-radius: 4px;
-            padding: 4px 10px;
+            background: #503721;
+            border: 3px solid var(--color-wood-dark);
+            padding: 4px 12px;
             font-size: 13px;
-            font-weight: 600;
+            font-weight: 700;
             color: #fff;
             display: flex;
             align-items: center;
             gap: 6px;
+            box-shadow: inset -2px -2px 0px #322112;
         }
 
         .tag-special {
-            background: rgba(98, 156, 54, 0.45);
+            background: var(--color-leaf-dark);
+            box-shadow: inset -2px -2px 0px #223c10;
         }
 
-        /* Minecraft Inventory Hotbar Navigation */
-        .hotbar-menu {
+        /* Minecraft Styled Hotbar Navigation */
+        .mc-hotbar {
             display: flex;
             justify-content: center;
-            gap: 12px;
-            background: rgba(20, 15, 12, 0.85);
-            border: 4px solid var(--color-wood-dark);
-            padding: 8px;
-            border-radius: 6px;
-            box-shadow: var(--pixel-shadow);
+            background: #8f8f8f;
+            border: 6px solid #3c3c3c;
+            border-top-color: #dbdbdb;
+            border-left-color: #dbdbdb;
+            border-right-color: #555;
+            border-bottom-color: #555;
+            padding: 4px;
+            border-radius: 2px;
+            box-shadow: 0 10px 0px rgba(0,0,0,0.5);
             position: sticky;
             top: 15px;
             z-index: 100;
-            backdrop-filter: blur(8px);
+            max-width: fit-content;
+            margin: 0 auto;
         }
 
-        .hotbar-slot {
-            width: 52px;
-            height: 52px;
-            background: #251b14;
-            border: 3px solid #140e0a;
-            border-radius: 4px;
+        .mc-slot {
+            width: 56px;
+            height: 56px;
+            background: #8f8f8f;
+            border: 4px inset #3c3c3c;
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
-            transition: all 0.2s ease;
+            transition: all 0.1s ease;
         }
 
-        .hotbar-slot:hover, .hotbar-slot.active {
-            background: #463428;
-            border-color: var(--color-glow);
-            transform: scale(1.06) translateY(-3px);
-            box-shadow: 0 4px 12px rgba(255, 223, 158, 0.25);
+        .mc-slot:hover {
+            background: rgba(255,255,255,0.1);
         }
 
-        .hotbar-slot svg {
+        .mc-slot.active {
+            border: 4px solid #ffffff;
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: inset 0 0 8px rgba(255,255,255,0.5);
+        }
+
+        .mc-slot svg {
             width: 24px;
             height: 24px;
-            fill: #ebdcb9;
+            fill: #dbdbdb;
+            filter: drop-shadow(2px 2px 0px #1a1a1a);
         }
 
-        .hotbar-slot:hover svg, .hotbar-slot.active svg {
+        .mc-slot.active svg {
             fill: var(--color-glow);
         }
 
-        .hotbar-slot::after {
+        /* Tooltip */
+        .mc-slot::after {
             content: attr(data-tooltip);
             position: absolute;
             bottom: -32px;
             left: 50%;
             transform: translateX(-50%) scale(0);
-            background: #181412;
-            color: #fff;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 11px;
-            font-family: var(--font-accent);
+            background: #120f1c;
+            color: #ebdcb9;
+            padding: 4px 10px;
+            border: 3px solid #3a158a;
+            font-size: 12px;
+            font-family: 'Quicksand', sans-serif;
             font-weight: 700;
             white-space: nowrap;
-            transition: all 0.2s ease;
+            transition: all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             pointer-events: none;
             opacity: 0;
-            border: 2px solid var(--color-wood-dark);
+            z-index: 200;
         }
 
-        .hotbar-slot:hover::after {
+        .mc-slot:hover::after {
             transform: translateX(-50%) scale(1);
             opacity: 1;
-            bottom: -38px;
+            bottom: -44px;
         }
 
-        /* Content Cozy Card */
+        /* Content Blocks */
         .cozy-card {
             background: var(--color-wood-cream);
-            border: 4px solid var(--color-wood-dark);
-            border-radius: 8px;
+            border: 6px solid var(--color-wood-dark);
+            border-radius: 4px;
             padding: 35px;
-            box-shadow: var(--pixel-shadow);
+            box-shadow: 0 10px 0px rgba(0,0,0,0.4);
             position: relative;
+            transition: background var(--transition-speed);
         }
 
         .cozy-card::before {
             content: '';
             position: absolute;
             top: 2px; left: 2px; right: 2px; bottom: 2px;
-            border: 2px solid rgba(255, 255, 255, 0.35);
+            border: 3px solid rgba(255, 255, 255, 0.25);
             pointer-events: none;
-            border-radius: 4px;
         }
 
         .section-title-wrapper {
-            border-bottom: 3px dashed var(--color-wood-light);
+            border-bottom: 4px dashed var(--color-wood-light);
             padding-bottom: 12px;
             margin-bottom: 25px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
 
         .section-icon {
-            width: 14px;
-            height: 14px;
-            background: var(--color-gold);
-            border: 2.5px solid var(--color-wood-dark);
-            border-radius: 2px;
+            width: 16px;
+            height: 16px;
+            background: var(--color-glow);
+            border: 3px solid var(--color-wood-dark);
+            box-shadow: inset -2px -2px 0px rgba(0,0,0,0.2);
         }
 
         .section-title {
-            font-family: var(--font-accent);
-            font-size: 20px;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 22px;
             font-weight: 800;
             color: var(--color-wood-dark);
-            letter-spacing: 0.5px;
+            text-shadow: 1px 1px 0px rgba(255,255,255,0.5);
         }
 
-        /* Content Sections Toggle */
+        /* Toggle Active Sections */
         .content-section {
             display: none;
-            animation: paneFadeIn 0.5s ease-out forwards;
+            animation: blockAppear 0.4s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
         }
 
         .content-section.active {
@@ -304,41 +365,44 @@
             gap: 25px;
         }
 
-        @keyframes paneFadeIn {
-            from { opacity: 0; transform: translateY(12px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes blockAppear {
+            from { transform: scale(0.96) translateY(20px); opacity: 0; }
+            to { transform: scale(1) translateY(0); opacity: 1; }
         }
 
         p {
-            line-height: 1.7;
+            line-height: 1.8;
             font-size: 15.5px;
-            color: #382717;
+            color: var(--color-text-dark);
             margin-bottom: 15px;
         }
 
-        /* Grid Layout for Project Panels */
+        /* Grid Panels for Projects */
         .project-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
-            gap: 20px;
+            gap: 22px;
         }
 
         .project-block {
-            background: #f2e7d5;
-            border: 3px solid var(--color-wood-dark);
-            border-radius: 6px;
-            padding: 22px;
+            background: #e5dac2;
+            border: 4px solid var(--color-wood-dark);
+            padding: 24px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            transition: all 0.25s ease;
-            position: relative;
+            gap: 14px;
+            transition: transform 0.2s, box-shadow 0.2s, background var(--transition-speed);
+            box-shadow: 0 6px 0px rgba(0,0,0,0.2);
+        }
+
+        .night-mode .project-block {
+            background: #343d46;
         }
 
         .project-block:hover {
             transform: translateY(-4px);
             border-color: var(--color-leaf-bright);
-            box-shadow: 0 6px 15px rgba(98, 156, 54, 0.15);
+            box-shadow: 0 10px 0px rgba(0,0,0,0.25);
         }
 
         .project-block h3 {
@@ -352,61 +416,73 @@
 
         .project-block p {
             font-size: 14px;
-            color: #4f3d2e;
+            color: var(--color-text-dark);
             margin: 0;
             flex-grow: 1;
             line-height: 1.6;
         }
 
-        .btn-interact {
-            background: var(--color-wood-light);
+        /* Classic Minecraft Buttons UI */
+        .mc-btn {
+            background: var(--mc-btn-bg);
+            border: 4px solid #000;
+            border-top-color: var(--mc-border-light);
+            border-left-color: var(--mc-border-light);
+            border-right-color: #555;
+            border-bottom-color: #555;
             color: #fff;
-            border: 2px solid var(--color-wood-dark);
-            padding: 7px 14px;
-            border-radius: 4px;
-            font-weight: 700;
-            font-size: 13.5px;
-            transition: all 0.2s ease;
-            align-self: flex-start;
+            text-shadow: 2px 2px 0px #3f3f3f;
+            image-rendering: pixelated;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: bold;
+            padding: 10px 18px;
+            box-shadow: inset -2px -2px 0px #333;
+            transform: translateY(0);
+            transition: all 0.1s ease;
+            text-align: center;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .btn-interact:hover {
-            background: var(--color-leaf-bright);
-            transform: scale(1.03);
+        .mc-btn:hover {
+            background: #c6c6c6;
+            border-color: #fff #fff #555 #555;
+            box-shadow: inset -2px -2px 0px #555;
         }
 
-        /* Anchor Buttons */
+        .mc-btn:active {
+            border-color: #555 #555 #fff #fff;
+            transform: translateY(2px);
+            box-shadow: none;
+        }
+
+        .mc-btn-green {
+            background: #5c8e32;
+            border-top-color: #84c546;
+            border-left-color: #84c546;
+            border-right-color: #385d1e;
+            border-bottom-color: #385d1e;
+            text-shadow: 2px 2px 0px #1c2e10;
+        }
+
+        .mc-btn-green:hover {
+            background: #74ab42;
+            border-color: #9ee059 #9ee059 #385d1e #385d1e;
+        }
+
         .drive-container {
             display: flex;
             justify-content: center;
             margin: 10px 0 20px 0;
         }
 
-        .btn-drive-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: var(--color-gold);
-            color: #fff;
-            border: 3px solid var(--color-wood-dark);
-            padding: 12px 24px;
-            border-radius: 6px;
-            font-weight: 700;
-            text-decoration: none;
-            transition: all 0.2s ease;
-            box-shadow: var(--pixel-shadow);
-        }
-
-        .btn-drive-link:hover {
-            background: #ffb13b;
-            transform: scale(1.03) translateY(-2px);
-        }
-
-        /* Dynamic Expandable Modal Overlay */
+        /* Inventory Screen Modal Style */
         .modal-mask {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(17, 13, 10, 0.8);
+            background: rgba(10, 8, 6, 0.85);
             backdrop-filter: blur(8px);
             z-index: 1000;
             display: none;
@@ -416,21 +492,24 @@
         }
 
         .modal-wrapper {
-            background: var(--color-wood-cream);
-            border: 5px solid var(--color-wood-dark);
-            border-radius: 8px;
+            background: #c6c6c6;
+            border: 6px solid #555;
+            border-top-color: #dbdbdb;
+            border-left-color: #dbdbdb;
+            border-right-color: #333;
+            border-bottom-color: #333;
             width: 100%;
             max-width: 880px;
             max-height: 85vh;
             overflow-y: auto;
             position: relative;
             padding: 35px;
-            box-shadow: var(--pixel-shadow);
-            animation: popUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.15) forwards;
+            box-shadow: 0 15px 0px rgba(0,0,0,0.6);
+            animation: blockPop 0.25s cubic-bezier(0.1, 0.8, 0.3, 1.2) forwards;
         }
 
-        @keyframes popUp {
-            from { transform: scale(0.92); opacity: 0; }
+        @keyframes blockPop {
+            from { transform: scale(0.8); opacity: 0; }
             to { transform: scale(1); opacity: 1; }
         }
 
@@ -440,23 +519,40 @@
             right: 15px;
             width: 32px;
             height: 32px;
-            background: #e25a5a;
-            border: 2.5px solid var(--color-wood-dark);
+            background: #ff5555;
+            border: 3px solid #000;
+            border-top-color: #ffaaaa;
+            border-left-color: #ffaaaa;
+            border-right-color: #aa0000;
+            border-bottom-color: #aa0000;
             color: #fff;
             font-weight: 800;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 4px;
-            transition: all 0.15s ease;
+            transition: all 0.1s ease;
+            box-shadow: inset -2px -2px 0px #550000;
         }
 
-        .modal-close-btn:hover {
-            background: #f13c3c;
-            transform: scale(1.05);
+        .modal-close-btn:active {
+            transform: translateY(2px);
+            border-color: #aa0000 #aa0000 #ffaaaa #ffaaaa;
         }
 
-        /* Modal content styles */
+        /* Modal Inner Design - Oak Signboard Header */
+        .modal-signboard {
+            background: #a06e42;
+            border: 4px solid #3d220d;
+            padding: 12px;
+            text-align: center;
+            color: #fff;
+            font-family: 'Quicksand', sans-serif;
+            text-shadow: 2px 2px 0px #000;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 0px rgba(0,0,0,0.25);
+        }
+
+        /* Styled list and tables */
         .report-section h4 {
             font-size: 16px;
             color: var(--color-wood-dark);
@@ -475,23 +571,22 @@
         }
 
         .report-section li {
-            margin-bottom: 6px;
+            margin-bottom: 8px;
             line-height: 1.65;
-            color: #3e2d1d;
+            color: var(--color-text-dark);
         }
 
         /* Styled Tables */
         .pixel-table-holder {
             overflow-x: auto;
             margin: 18px 0;
-            border: 3px solid var(--color-wood-dark);
-            border-radius: 6px;
+            border: 4px solid var(--color-wood-dark);
         }
 
         .pixel-table {
             width: 100%;
             border-collapse: collapse;
-            background: #f4ecd8;
+            background: #e2dac6;
             font-size: 13.5px;
             text-align: left;
         }
@@ -501,56 +596,64 @@
             color: white;
             padding: 10px;
             font-weight: 600;
-            border-bottom: 3px solid var(--color-wood-dark);
+            border-bottom: 4px solid var(--color-wood-dark);
         }
 
         .pixel-table td {
             padding: 10px;
             border-bottom: 1px solid rgba(60, 47, 47, 0.15);
-            color: #3e2717;
+            color: var(--color-text-dark);
         }
 
         .pixel-table tr:nth-child(even) {
-            background: rgba(251, 246, 236, 0.6);
+            background: rgba(251, 246, 236, 0.4);
         }
 
-        /* Dynamic Source Swapper Interface */
+        /* Source Swapper Grid Layout - Styled like Inventory slots */
         .swapper-panel {
-            background: #f2e7d5;
-            border: 3px solid var(--color-wood-dark);
-            border-radius: 6px;
+            background: #b8b8b8;
+            border: 4px solid #3c3c3c;
             padding: 15px;
             margin: 15px 0;
         }
 
         .swapper-header {
             display: flex;
-            gap: 8px;
+            gap: 6px;
             overflow-x: auto;
             padding-bottom: 10px;
-            border-bottom: 2px dashed var(--color-wood-light);
             margin-bottom: 12px;
+            border-bottom: 3px dashed #777;
         }
 
         .swapper-tab {
-            background: #dfd2be;
-            border: 2px solid var(--color-wood-dark);
-            border-radius: 4px;
-            padding: 4px 10px;
+            width: 44px;
+            height: 44px;
+            background: #8f8f8f;
+            border: 3px inset #3c3c3c;
             font-size: 11px;
             font-weight: 700;
-            white-space: nowrap;
-            transition: all 0.2s ease;
+            color: #fff;
+            text-shadow: 1px 1px 0px #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.1s ease;
         }
 
         .swapper-tab.active, .swapper-tab:hover {
-            background: var(--color-wood-light);
-            color: #fff;
+            border: 3px solid #fff;
+            background: rgba(255,255,255,0.15);
         }
 
         .swapper-body {
             font-size: 14px;
             line-height: 1.6;
+            background: #f4edd8;
+            border: 3px solid #3c3c3c;
+            padding: 15px;
+            color: #2c1e12;
         }
 
         /* Step checklist styling for Task 1 */
@@ -566,9 +669,8 @@
             align-items: flex-start;
             gap: 10px;
             background: rgba(255, 255, 255, 0.4);
-            border: 2px solid var(--color-wood-dark);
-            border-radius: 6px;
-            padding: 10px 14px;
+            border: 3px solid var(--color-wood-dark);
+            padding: 12px 14px;
             transition: all 0.15s ease;
         }
 
@@ -578,11 +680,10 @@
         }
 
         .check-box {
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
             background: #fff;
-            border: 2px solid var(--color-wood-dark);
-            border-radius: 3px;
+            border: 3px solid var(--color-wood-dark);
             flex-shrink: 0;
             margin-top: 2px;
             display: flex;
@@ -594,11 +695,11 @@
         }
 
         .check-content {
-            font-size: 14px;
+            font-size: 14.5px;
             line-height: 1.5;
         }
 
-        /* Interactive Kanban Simulator for Task 4 */
+        /* Kanban Board Simulator (Task 4) */
         .kanban-board {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -607,9 +708,8 @@
         }
 
         .kanban-col {
-            background: #dfd2be;
-            border: 2px solid var(--color-wood-dark);
-            border-radius: 6px;
+            background: #c6c6c6;
+            border: 3px solid #555;
             padding: 10px;
         }
 
@@ -618,18 +718,17 @@
             font-weight: 800;
             text-align: center;
             margin-bottom: 8px;
-            border-bottom: 2px solid var(--color-wood-dark);
+            border-bottom: 3px solid #555;
             padding-bottom: 4px;
         }
 
         .kanban-item {
             background: #fff;
-            border: 2px solid var(--color-wood-dark);
-            border-radius: 4px;
+            border: 3px solid #000;
             padding: 8px;
             font-size: 12px;
             margin-bottom: 8px;
-            box-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+            box-shadow: inset -2px -2px 0px #dbdbdb;
         }
 
         /* Prompt Sandbox styling */
@@ -640,26 +739,30 @@
         }
 
         .sandbox-tab {
-            background: #dfd2be;
-            border: 2px solid var(--color-wood-dark);
-            border-radius: 4px;
+            background: var(--mc-btn-bg);
+            border: 3px solid #000;
+            border-top-color: var(--mc-border-light);
+            border-left-color: var(--mc-border-light);
+            border-right-color: #555;
+            border-bottom-color: #555;
+            color: #fff;
+            text-shadow: 1px 1px 0px #3f3f3f;
             padding: 6px 12px;
             font-size: 12px;
             font-weight: 700;
-            transition: all 0.2s ease;
+            transition: all 0.1s ease;
         }
 
         .sandbox-tab.active, .sandbox-tab:hover {
-            background: var(--color-gold);
-            color: #fff;
+            background: #74ab42;
+            border-color: #9ee059 #9ee059 #385d1e #385d1e;
         }
 
         .sandbox-code-block {
-            background: #251b14;
+            background: #1c1510;
             color: #f5edd6;
             padding: 15px;
-            border-radius: 6px;
-            border: 2px solid var(--color-wood-dark);
+            border: 3px solid var(--color-wood-dark);
             font-family: monospace;
             font-size: 13px;
             white-space: pre-wrap;
@@ -675,8 +778,7 @@
         }
 
         .comp-card {
-            border: 2px solid var(--color-wood-dark);
-            border-radius: 6px;
+            border: 3px solid var(--color-wood-dark);
             padding: 12px 16px;
         }
 
@@ -730,9 +832,16 @@
     <canvas id="particle-canvas"></canvas>
 
     <div class="main-container">
-        <!-- HEADER / PROFILE -->
+        <!-- DAY/NIGHT INTERACTIVE SWITCH -->
+        <div class="lever-container">
+            <div class="mc-sign">THỜI GIAN: HOÀNG HÔN</div>
+            <div class="mc-lever" onclick="toggleDayNight(this)">
+                <div class="mc-handle"></div>
+            </div>
+        </div>
+
+        <!-- OAK PROFILE BOX -->
         <header>
-            <div class="vine-deco"></div>
             <div class="avatar-wrapper">
                 <img src="Hình 1.jpg" alt="Avatar" class="avatar-img">
             </div>
@@ -741,32 +850,32 @@
                 <div class="tag-container">
                     <span class="tag tag-special">📦 MSSV: 25041575</span>
                     <span class="tag">🏮 Ngôn ngữ và Văn hoá Trung Quốc</span>
-                    <span class="tag">🎓 Đại học Ngoại ngữ - ĐHQGHN</span>
+                    <span class="tag">🎓 Trường Đại học Ngoại ngữ - ĐHQGHN</span>
                 </div>
                 <p style="color: #ebdcb9; font-size: 14.5px; margin-top: 8px; line-height: 1.6;">
-                    Chào bạn! Mình là Đại. Là một sinh viên chuyên ngành ngôn ngữ tại ULIS, mình luôn có một khao khát kết nối ngôn từ cổ điển với nhịp thở số hiện đại. Digital Portfolio này chính là một ngôi nhà nhỏ thể hiện quá trình tự rèn luyện, ứng dụng công nghệ thực tế và sự đồng hành của AI có trách nhiệm của riêng mình.
+                    Chào bạn! Mình là Đại. Là một sinh viên chuyên ngành ngôn ngữ tại ULIS, mình luôn khao khát kết hợp ngôn từ cổ điển với nhịp thở số hiện đại. Digital Portfolio này chính là một hòm kho báu nhỏ lưu giữ hành trình rèn luyện, ứng dụng công nghệ thực tế và sự đồng hành của AI có trách nhiệm của riêng mình.
                 </p>
             </div>
         </header>
 
-        <!-- MINECRAFT SLOTS MENU -->
-        <nav class="hotbar-menu">
-            <div class="hotbar-slot active" data-tab="about" data-tooltip="TRANG CHỦ">
+        <!-- MINECRAFT INTERACTIVE HOTBAR NAVIGATION -->
+        <nav class="mc-hotbar" id="hotbar">
+            <div class="mc-slot active" data-tab="about" data-tooltip="TRANG CHỦ" onclick="switchTab(this)">
                 <svg viewBox="0 0 24 24">
                     <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
                 </svg>
             </div>
-            <div class="hotbar-slot" data-tab="projects" data-tooltip="KHO BÀI TẬP">
+            <div class="mc-slot" data-tab="projects" data-tooltip="KHO BÀI TẬP" onclick="switchTab(this)">
                 <svg viewBox="0 0 24 24">
                     <path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 9H9V9h10v2zm-4 4H9v-2h6v2zm4-8H9V5h10v2z"/>
                 </svg>
             </div>
-            <div class="hotbar-slot" data-tab="reflection" data-tooltip="BÁO CÁO TỔNG KẾT">
+            <div class="mc-slot" data-tab="reflection" data-tooltip="BÁO CÁO TỔNG KẾT" onclick="switchTab(this)">
                 <svg viewBox="0 0 24 24">
                     <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
                 </svg>
             </div>
-            <a class="hotbar-slot" href="https://drive.google.com/drive/folders/1K7SuNxLtYVhqSs4orFwufXGkgbKSnW4p?usp=drive_link" target="_blank" data-tooltip="XEM DRIVER" style="text-decoration: none;">
+            <a class="mc-slot" href="https://drive.google.com/drive/folders/1K7SuNxLtYVhqSs4orFwufXGkgbKSnW4p?usp=drive_link" target="_blank" data-tooltip="XEM GOOGLE DRIVE" style="text-decoration: none;" onclick="synth.click()">
                 <svg viewBox="0 0 24 24">
                     <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z"/>
                 </svg>
@@ -784,9 +893,9 @@
                     Chào bạn! Dự án Portfolio kỹ thuật số cá nhân này là một cột mốc thu hoạch lớn của mình sau khóa học <strong>Nhập môn Công nghệ số và Ứng dụng trí tuệ nhân tạo</strong>. Không chỉ dừng lại ở một công cụ báo cáo điểm số cơ bản, mục tiêu sâu sắc hơn của Portfolio này là:
                 </p>
                 <ul style="padding-left: 20px; margin-bottom: 20px;">
-                    <li style="margin-bottom: 8px; line-height: 1.6; color: #382717;"><strong>Hệ thống hóa năng lực cá nhân:</strong> Biến những lý thuyết trừu tượng về tệp tin, dữ liệu, prompt engineering và cộng tác trực tuyến thành một sản phẩm thực tế có cấu trúc, mạch lạc.</li>
-                    <li style="margin-bottom: 8px; line-height: 1.6; color: #382717;"><strong>Định hình tư duy AI thế hệ mới:</strong> Minh chứng khả năng làm chủ các công cụ hỗ trợ thông minh dựa trên một nền tảng liêm chính, tôn trọng tri thức đích thực.</li>
-                    <li style="margin-bottom: 8px; line-height: 1.6; color: #382717;"><strong>Sự giao thoa đầy cảm hứng:</strong> Thể hiện tư duy thẩm mỹ mộng mơ, hiện đại qua không gian giao diện lấy cảm hứng từ những khối Minecraft bình yên và ấm áp.</li>
+                    <li style="margin-bottom: 8px; line-height: 1.6; color: var(--color-text-dark);"><strong>Hệ thống hóa năng lực cá nhân:</strong> Biến những lý thuyết trừu tượng về tệp tin, dữ liệu, prompt engineering và cộng tác trực tuyến thành một sản phẩm thực tế có cấu trúc, mạch lạc.</li>
+                    <li style="margin-bottom: 8px; line-height: 1.6; color: var(--color-text-dark);"><strong>Định hình tư duy AI thế hệ mới:</strong> Minh chứng khả năng làm chủ các công cụ hỗ trợ thông minh dựa trên một nền tảng liêm chính, tôn trọng tri thức đích thực.</li>
+                    <li style="margin-bottom: 8px; line-height: 1.6; color: var(--color-text-dark);"><strong>Sự giao thoa đầy cảm hứng:</strong> Thể hiện tư duy thẩm mỹ mộng mơ, hiện đại qua không gian giao diện lấy cảm hứng từ những khối Minecraft bình yên và ấm áp.</li>
                 </ul>
                 <p>
                     Mong rằng những nội dung thực tiễn được hiển thị dưới đây sẽ mang lại cho bạn một góc nhìn chân thực, khách quan và thú vị nhất về nỗ lực rèn luyện của một ULISer thời đại số!
@@ -797,7 +906,7 @@
         <!-- SECTION 2: PROJECTS PANELS -->
         <section id="projects" class="content-section">
             <div class="drive-container">
-                <a href="https://drive.google.com/drive/folders/1K7SuNxLtYVhqSs4orFwufXGkgbKSnW4p?usp=drive_link" class="btn-drive-link" target="_blank">
+                <a href="https://drive.google.com/drive/folders/1K7SuNxLtYVhqSs4orFwufXGkgbKSnW4p?usp=drive_link" class="mc-btn mc-btn-green" target="_blank">
                     💾 XEM BÀI TẬP TRÊN GOOGLE DRIVE
                 </a>
             </div>
@@ -805,7 +914,7 @@
             <div class="cozy-card">
                 <div class="section-title-wrapper">
                     <div class="section-icon"></div>
-                    <h2 class="section-title">📦 HỆ THỐNG CÁC DỰ ÁN THỰC HÀNH</h2>
+                    <h2 class="section-title">📂 HỆ THỐNG CÁC DỰ ÁN THỰC HÀNH</h2>
                 </div>
                 <p style="margin-bottom: 25px;">
                     Click vào nút <strong>"Xem chi tiết"</strong> của từng nhiệm vụ bên dưới để truy cập nội dung đầy đủ, mục tiêu, kết quả tương tác và bài học kinh nghiệm chi tiết nhất.
@@ -816,42 +925,42 @@
                     <div class="project-block">
                         <h3>📁 Bài 1: Quản lý tệp & Thư mục</h3>
                         <p>Quy trình thực tế gồm đầy đủ 12 bước tối ưu sắp xếp, lưu trữ cấu trúc cây thư mục ảo khoa học "ThucHanh_CHUQUANGDAI" không sợ thất lạc dữ liệu.</p>
-                        <button class="btn-interact" onclick="openProject('p1')">Xem chi tiết</button>
+                        <button class="mc-btn" onclick="openProject('p1')">Xem chi tiết</button>
                     </div>
 
                     <!-- Project 2 -->
                     <div class="project-block">
                         <h3>🔍 Bài 2: Nghiên cứu Ngữ pháp & Đánh giá</h3>
                         <p>Tổng hợp chi tiết các lỗi "chuyển di tiêu cực" tiếng Trung và bảng đánh giá đối chiếu 10 nguồn tài liệu nghiên cứu học thuật uy tín.</p>
-                        <button class="btn-interact" onclick="openProject('p2')">Xem chi tiết</button>
+                        <button class="mc-btn" onclick="openProject('p2')">Xem chi tiết</button>
                     </div>
 
                     <!-- Project 3 -->
                     <div class="project-block">
                         <h3>🤖 Bài 3: Nghệ thuật Prompt Engineering</h3>
                         <p>Xây dựng và so sánh thực nghiệm 3 cấp độ prompt từ cơ bản đến nâng cao cho các tác vụ tóm tắt, giải thích khái niệm và soạn câu hỏi ôn tập.</p>
-                        <button class="btn-interact" onclick="openProject('p3')">Xem chi tiết</button>
+                        <button class="mc-btn" onclick="openProject('p3')">Xem chi tiết</button>
                     </div>
 
                     <!-- Project 4 -->
                     <div class="project-block">
                         <h3>🤝 Bài 4: Cộng tác trực tuyến nhóm 6</h3>
                         <p>Cách chúng mình xử lý các bất đồng bộ khi làm việc trực tuyến bằng cách ứng dụng thực hành hệ sinh thái Google Docs, Trello, Zalo & Google Meet.</p>
-                        <button class="btn-interact" onclick="openProject('p4')">Xem chi tiết</button>
+                        <button class="mc-btn" onclick="openProject('p4')">Xem chi tiết</button>
                     </div>
 
                     <!-- Project 5 -->
                     <div class="project-block">
                         <h3>🎨 Bài 5: Sáng tạo Infographic với AI</h3>
                         <p>Dự án thiết kế ấn phẩm ngôn ngữ mạng Gen Z dựa trên sự hợp lực tinh tế giữa Claude, ChatGPT, Stable Diffusion và Canva AI.</p>
-                        <button class="btn-interact" onclick="openProject('p5')">Xem chi tiết</button>
+                        <button class="mc-btn" onclick="openProject('p5')">Xem chi tiết</button>
                     </div>
 
                     <!-- Project 6 -->
                     <div class="project-block">
                         <h3>🛡️ Bài 6: Sử dụng AI có trách nhiệm</h3>
                         <p>Phân tích chính sách liêm chính, thực nghiệm kiểm chứng số liệu McKinsey/WEF và thiết lập 7 nguyên tắc đạo đức sử dụng AI cá nhân.</p>
-                        <button class="btn-interact" onclick="openProject('p6')">Xem chi tiết</button>
+                        <button class="mc-btn" onclick="openProject('p6')">Xem chi tiết</button>
                     </div>
                 </div>
             </div>
@@ -885,43 +994,103 @@
         <!-- FOOTER -->
         <footer>
             <p>© 2026 Chu Quang Đại | Khoa Ngôn ngữ và Văn hoá Trung Quốc - ULIS</p>
-            <p style="font-size: 11px; opacity: 0.85; font-family: var(--font-accent); font-weight: 700;">Crafted with Cozy Block Aesthetics & Perfect Vietnamese Fonts</p>
+            <p style="font-size: 11px; opacity: 0.85; font-family: 'Quicksand', sans-serif; font-weight: 700;">Crafted with Cozy Block Aesthetics, synthesized retro sounds & Perfect Vietnamese Fonts</p>
         </footer>
     </div>
 
-    <!-- DYNAMIC EXPANDABLE MODAL OVERLAY -->
+    <!-- DYNAMIC CHEST POPUP MODAL -->
     <div id="project-modal" class="modal-mask" onclick="closeModal()">
         <div class="modal-wrapper" onclick="event.stopPropagation()">
             <button class="modal-close-btn" onclick="closeModal()">X</button>
             <div id="modal-dynamic-content" class="report-section">
-                <!-- Javascript will render data here -->
+                <!-- Javascript will inject data -->
             </div>
         </div>
     </div>
 
     <script>
-        // Tab system logic
-        const slots = document.querySelectorAll('.hotbar-slot[data-tab]');
+        // Synthesizer Module for lightweight Minecraft click and level up sounds (XP orb chime)
+        const synth = {
+            ctx: null,
+            init() {
+                if (!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+            },
+            click() {
+                this.init();
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(130, this.ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(70, this.ctx.currentTime + 0.04);
+                gain.gain.setValueAtTime(0.12, this.ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.04);
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start();
+                osc.stop(this.ctx.currentTime + 0.04);
+            },
+            levelUp() {
+                this.init();
+                const now = this.ctx.currentTime;
+                const playChime = (freq, delay) => {
+                    const osc = this.ctx.createOscillator();
+                    const gain = this.ctx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(freq, now + delay);
+                    gain.gain.setValueAtTime(0.07, now + delay);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + delay + 0.18);
+                    osc.connect(gain);
+                    gain.connect(this.ctx.destination);
+                    osc.start(now + delay);
+                    osc.stop(now + delay + 0.18);
+                };
+                playChime(1000, 0);
+                playChime(1300, 0.07);
+            }
+        };
+
+        // Scroll Hotbar Navigation
+        const slots = document.querySelectorAll('.mc-slot');
         const sections = document.querySelectorAll('.content-section');
+        let currentSlotIdx = 0;
 
-        slots.forEach(slot => {
-            slot.addEventListener('click', () => {
-                const tabId = slot.getAttribute('data-tab');
-                slots.forEach(s => s.classList.remove('active'));
-                slot.classList.add('active');
+        window.addEventListener('wheel', (e) => {
+            // Scroll hotbar navigation only when modal is not active
+            if (document.getElementById('project-modal').style.display === 'flex') return;
+            
+            if (e.deltaY > 0) {
+                currentSlotIdx = (currentSlotIdx + 1) % slots.length;
+            } else {
+                currentSlotIdx = (currentSlotIdx - 1 + slots.length) % slots.length;
+            }
+            slots[currentSlotIdx].click();
+        }, { passive: true });
 
-                sections.forEach(sec => {
-                    sec.classList.remove('active');
-                    if(sec.id === tabId) {
-                        sec.classList.add('active');
-                    }
-                });
+        function switchTab(slotElement) {
+            synth.click();
+            const tabId = slotElement.getAttribute('data-tab');
+            slots.forEach((s, idx) => {
+                s.classList.remove('active');
+                if (s === slotElement) currentSlotIdx = idx;
             });
-        });
+            slotElement.classList.add('active');
 
-        // Falling Leaf Particles Canvas Animation
+            sections.forEach(sec => {
+                sec.classList.remove('active');
+                if(sec.id === tabId) {
+                    sec.classList.add('active');
+                }
+            });
+        }
+
+        // Click-to-break Particle Physics Block system
         const canvas = document.getElementById('particle-canvas');
         const ctx = canvas.getContext('2d');
+        const leafColors = ['#4c7828', '#5d9134', '#78b548', '#86bd58', '#ffd885'];
+        const nightColors = ['#224f38', '#1d5e4a', '#399e71', '#ffc72c', '#ebdcb9'];
+        let activeColors = leafColors;
+
+        const particles = [];
 
         function resizeCanvas() {
             canvas.width = window.innerWidth;
@@ -930,24 +1099,49 @@
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
 
-        const leaves = [];
-        const leafColors = ['#4c7828', '#5d9134', '#78b548', '#86bd58', '#ffd885'];
+        class Particle {
+            constructor(x, y, color) {
+                this.x = x;
+                this.y = y;
+                this.size = Math.random() * 6 + 4;
+                this.speedX = (Math.random() - 0.5) * 8;
+                this.speedY = (Math.random() - 0.5) * 8 - 3;
+                this.gravity = 0.2;
+                this.life = 1;
+                this.decay = Math.random() * 0.03 + 0.02;
+                this.color = color;
+            }
+            update() {
+                this.speedY += this.gravity;
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.life -= this.decay;
+            }
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = Math.max(0, this.life);
+                ctx.fillStyle = this.color;
+                ctx.fillRect(this.x - this.size / 2, this.y - this.size / 2, this.size, this.size);
+                ctx.restore();
+            }
+        }
 
-        class PixelLeaf {
+        // Idle decorative leaves drifting down
+        class AmbientLeaf {
             constructor() { this.reset(); }
             reset() {
                 this.x = Math.random() * canvas.width;
                 this.y = -20;
                 this.size = Math.random() * 5 + 4;
-                this.speedY = Math.random() * 1.2 + 0.6;
-                this.speedX = Math.random() * 0.8 - 0.4;
-                this.color = leafColors[Math.floor(Math.random() * leafColors.length)];
+                this.speedY = Math.random() * 1.0 + 0.5;
+                this.speedX = Math.random() * 0.6 - 0.3;
+                this.color = activeColors[Math.floor(Math.random() * activeColors.length)];
                 this.rotation = Math.random() * 360;
                 this.rotationSpeed = Math.random() * 1.5 - 0.75;
             }
             update() {
                 this.y += this.speedY;
-                this.x += this.speedX + Math.sin(this.y / 25) * 0.25;
+                this.x += this.speedX + Math.sin(this.y / 25) * 0.2;
                 this.rotation += this.rotationSpeed;
                 if (this.y > canvas.height + 15 || this.x < -15 || this.x > canvas.width + 15) {
                     this.reset();
@@ -963,82 +1157,130 @@
             }
         }
 
-        for(let i = 0; i < 35; i++) { leaves.push(new PixelLeaf()); }
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            leaves.forEach(l => { l.update(); l.draw(); });
-            requestAnimationFrame(animate);
-        }
-        animate();
+        const ambientParticles = [];
+        for(let i = 0; i < 35; i++) { ambientParticles.push(new AmbientLeaf()); }
 
-        // Project Detailed Content Repository (NO CUTS!)
+        document.addEventListener('click', (e) => {
+            // Get color context based on what was clicked
+            let blockColor = '#e29c33'; // Default gold block dust
+            const target = e.target;
+            if (target.closest('.mc-btn-green') || target.closest('.tag-special')) {
+                blockColor = '#629c36'; // Green leaves
+            } else if (target.closest('.mc-hotbar') || target.closest('.mc-slot')) {
+                blockColor = '#8f8f8f'; // Stone blocks
+            } else if (target.closest('header') || target.closest('.cozy-card')) {
+                blockColor = '#6a4c33'; // Wood blocks
+            } else if (target.closest('.mc-lever')) {
+                blockColor = '#ff5555'; // Redstone dust
+            }
+
+            for (let i = 0; i < 15; i++) {
+                particles.push(new Particle(e.clientX, e.clientY, blockColor));
+            }
+        });
+
+        function particleLoop() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw ambient particles
+            ambientParticles.forEach(l => {
+                l.update();
+                l.draw();
+            });
+
+            // Draw click-burst particles
+            for (let i = particles.length - 1; i >= 0; i--) {
+                const p = particles[i];
+                p.update();
+                p.draw();
+                if (p.life <= 0) particles.splice(i, 1);
+            }
+            requestAnimationFrame(particleLoop);
+        }
+        particleLoop();
+
+        // Day / Night Switch Lever
+        function toggleDayNight(leverElement) {
+            synth.click();
+            document.body.classList.toggle('night-mode');
+            const sign = document.querySelector('.mc-sign');
+            if (document.body.classList.contains('night-mode')) {
+                sign.innerText = 'THỜI GIAN: ĐÊM TỐI';
+                activeColors = nightColors;
+            } else {
+                sign.innerText = 'THỜI GIAN: HOÀNG HÔN';
+                activeColors = leafColors;
+            }
+            // Reset ambient particle colors
+            ambientParticles.forEach(p => p.reset());
+        }
+
+        // Project Detailed Repository (100% full content)
         const projectDetailedData = {
             p1: `
-                <div class="section-title-wrapper">
-                    <div class="section-icon"></div>
-                    <h2 class="section-title">📂 BÀI 1: QUY TRÌNH 12 BƯỚC QUẢN LÝ TỆP & THƯ MỤC</h2>
+                <div class="modal-signboard">
+                    <h2 class="section-title" style="color:#fff;">📂 BÀI 1: THAO TÁC CƠ BẢN VỚI TỆP VÀ THƯ MỤC</h2>
                 </div>
-                <p><strong>Mục tiêu bài tập:</strong> Thiết lập một hệ thống quản trị dữ liệu học tập thông minh, logic và ngăn nắp, giảm thiểu rủi ro thất lạc thông tin học tập của sinh viên.</p>
+                <p><strong>Mục tiêu bài tập:</strong> Thiết lập cấu trúc hệ lưu trữ tối ưu của cá nhân, loại bỏ thói quen lưu file lộn xộn để tăng 200% hiệu suất kiểm soát thông tin bài học.</p>
                 
-                <h4>🛠️ Trình mô phỏng 12 bước thực tế:</h4>
+                <h4>🛠️ Tiến trình thực nghiệm 12 bước chi tiết:</h4>
                 <div class="step-checklist">
                     <div class="checklist-item">
                         <div class="check-box">✓</div>
-                        <div class="check-content"><strong>Bước 1: Khởi tạo thư mục gốc</strong> - Tạo thư mục chính mang tên "ThucHanh_CHUQUANGDAI" để tập trung hóa tất cả các tài liệu của môn học.</div>
+                        <div class="check-content"><strong>Bước 1: Khởi tạo thư mục gốc</strong> - Tạo thư mục chính mang tên "ThucHanh_CHUQUANGDAI" tại vùng làm việc an toàn của hệ điều hành.</div>
                     </div>
                     <div class="checklist-item">
                         <div class="check-box">✓</div>
-                        <div class="check-content"><strong>Bước 2: Thiết lập cấu trúc thư mục con</strong> - Phân loại khoa học bằng cách tạo các thư mục con bên trong như: "TaiLieu" và "BaoCao" để phân tách lý thuyết và bài tập nộp.</div>
+                        <div class="check-content"><strong>Bước 2: Thiết lập thư mục con cấu trúc</strong> - Khởi tạo các nhánh cây thư mục gồm "TaiLieu" và "BaoCao" để phân định rạch ròi tài liệu học tập thô và sản phẩm nộp.</div>
                     </div>
                     <div class="checklist-item">
                         <div class="check-box">✓</div>
-                        <div class="check-content"><strong>Bước 3: Chuẩn hóa quy tắc đặt tên tệp</strong> - Định hình quy tắc đặt tên không dấu, viết liền hoặc dùng dấu gạch dưới để bảo vệ tệp khỏi lỗi đường dẫn khi chuyển tiếp trên các hệ thống khác nhau.</div>
+                        <div class="check-content"><strong>Bước 3: Chuẩn hóa quy tắc đặt tên</strong> - Áp dụng quy tắc đặt tên không dấu, sử dụng gạch dưới thay cho khoảng trắng để bảo vệ tệp trước sự cố lỗi đường dẫn máy chủ.</div>
                     </div>
                     <div class="checklist-item">
                         <div class="check-box">✓</div>
-                        <div class="check-content"><strong>Bước 4: Thu thập dữ liệu thô</strong> - Gom các tài liệu rời rạc từ màn hình chính Desktop hoặc mục Download vào một khu vực trung gian để chuẩn bị sắp xếp.</div>
+                        <div class="check-content"><strong>Bước 4: Sắp xếp tài liệu gốc</strong> - Tập hợp tất cả tệp dữ liệu bài giảng, đề cương thô từ Desktop vào một thư mục tạm để làm sạch không gian nền.</div>
                     </div>
                     <div class="checklist-item">
                         <div class="check-box">✓</div>
-                        <div class="check-content"><strong>Bước 5: Thao tác di chuyển (Move) dữ liệu</strong> - Di chuyển tệp tin lý thuyết vào thư mục "TaiLieu" bằng phím tắt hoặc kéo thả chuột một cách chính xác.</div>
+                        <div class="check-content"><strong>Bước 5: Di chuyển tệp tin (Move)</strong> - Phân loại kéo thả thủ công hoặc sử dụng phím tắt chuyển các bài lý thuyết vào đúng thư mục "TaiLieu" tương ứng.</div>
                     </div>
                     <div class="checklist-item">
                         <div class="check-box">✓</div>
-                        <div class="check-content"><strong>Bước 6: Tạo tệp ghi chú mới</strong> - Tạo một tệp văn bản thô mang tên "GhiChu.txt" bằng ứng dụng TextEdit hoặc Notepad để lưu nhanh mô tả danh mục tệp.</div>
+                        <div class="check-content"><strong>Bước 6: Tạo tệp văn bản mới</strong> - Khởi tạo tệp tin ghi chú "GhiChu.txt" bằng TextEdit hoặc Notepad để bắt đầu biên soạn tóm tắt nội dung danh mục.</div>
                     </div>
                     <div class="checklist-item">
                         <div class="check-box">✓</div>
-                        <div class="check-content"><strong>Bước 7: Đổi tên tệp tin hệ thống (Rename)</strong> - Tiến hành đổi tên tệp "GhiChu.txt" thành "GhiChuQuanTrong.txt" nhằm định hình mức độ ưu tiên của dữ liệu.</div>
+                        <div class="check-content"><strong>Bước 7: Đổi tên (Rename)</strong> - Sửa tên tệp văn bản thành "GhiChuQuanTrong.txt" để nâng cao tính bảo mật và cấp độ chú ý của dữ liệu.</div>
                     </div>
                     <div class="checklist-item">
                         <div class="check-box">✓</div>
-                        <div class="check-content"><strong>Bước 8: Tối ưu hóa độ sâu đường dẫn</strong> - Sắp xếp lại sao cho đường dẫn tệp ngắn gọn nhất, tránh lỗi hệ thống do vượt quá giới hạn ký tự đường dẫn tối đa của Windows/MacOS.</div>
+                        <div class="check-content"><strong>Bước 8: Tối ưu hóa chiều sâu thư mục</strong> - Tinh chỉnh sao cho tệp không bị lún quá sâu trong nhiều tầng thư mục con, duy trì đường dẫn ngắn gọn.</div>
                     </div>
                     <div class="checklist-item">
                         <div class="check-box">✓</div>
-                        <div class="check-content"><strong>Bước 9: Thực hiện sao lưu dự phòng (Backup)</strong> - Tạo thư mục phụ "DiChuyen" và sao chép các tệp quan trọng vào đó nhằm tránh các sự cố mất mát thông tin ngoài ý muốn.</div>
+                        <div class="check-content"><strong>Bước 9: Sao lưu dữ liệu (Backup)</strong> - Tạo thư mục dự phòng mang tên "DiChuyen" và nhân bản các tệp tin ghi chú quan trọng sang đây phòng ngừa sự cố mất mát.</div>
                     </div>
                     <div class="checklist-item">
                         <div class="check-box">✓</div>
-                        <div class="check-content"><strong>Bước 10: Dọn dẹp tệp tin thừa</strong> - Thực hiện thao tác xóa (Delete) các tệp tin rác, các bản nháp trung gian để tránh gây loãng hệ thống lưu trữ.</div>
+                        <div class="check-content"><strong>Bước 10: Xóa dữ liệu dư thừa</strong> - Thanh lọc và di chuyển các tệp nháp lỗi, các file trùng lặp không còn giá trị sử dụng vào thùng rác.</div>
                     </div>
                     <div class="checklist-item">
                         <div class="check-box">✓</div>
-                        <div class="check-content"><strong>Bước 11: Kiểm soát và quản lý Thùng rác (Trash)</strong> - Thử nghiệm khôi phục tệp tin xóa nhầm từ thùng rác và sau đó thực hiện dọn dẹp thùng rác vĩnh viễn để giải phóng bộ nhớ.</div>
+                        <div class="check-content"><strong>Bước 11: Quản trị thùng rác (Recycle Bin)</strong> - Thực hành khôi phục tệp từ thùng rác và tiến hành dọn dẹp (Empty Trash) vĩnh viễn để tối ưu dung lượng đĩa cứng.</div>
                     </div>
                     <div class="checklist-item">
                         <div class="check-box">✓</div>
-                        <div class="check-content"><strong>Bước 12: Đóng gói và nén dữ liệu (.zip)</strong> - Tiến hành nén thư mục "ThucHanh_CHUQUANGDAI" để nộp bài hoặc gửi qua các phương tiện truyền thông trực tuyến một cách gọn gàng nhất.</div>
+                        <div class="check-content"><strong>Bước 12: Đóng gói lưu trữ (.zip)</strong> - Nén nén thư mục "ThucHanh_CHUQUANGDAI" thành dạng file zip tiêu chuẩn để chuẩn bị nộp bài hoặc chia sẻ điện toán đám mây.</div>
                     </div>
                 </div>
 
-                <h4>💡 Bài học kinh nghiệm rút ra:</h4>
+                <h4>💡 Bài học kinh nghiệm:</h4>
                 <p>Một không gian ảo sạch sẽ chính là tiền đề cho một tư duy minh mẫn. Sắp xếp dữ liệu giống như việc phân loại rương trong Minecraft - nó giúp tốc độ hoàn thành công việc của mình nhanh hơn gấp nhiều lần.</p>
             `,
             p2: `
-                <div class="section-title-wrapper">
-                    <div class="section-icon"></div>
-                    <h2 class="section-title">🔎 BÀI 2: KHAI THÁC NGỮ PHÁP TIẾNG TRUNG & ĐÁNH GIÁ 10 NGUỒN</h2>
+                <div class="modal-signboard">
+                    <h2 class="section-title" style="color:#fff;">🔎 BÀI 2: KHAI THÁC NGỮ PHÁP TIẾNG TRUNG & ĐÁNH GIÁ 10 NGUỒN</h2>
                 </div>
                 <p><strong>Mục tiêu bài tập:</strong> Khai thác học thuật, so sánh đối chiếu ngữ pháp Việt - Trung để chỉ ra nguyên nhân gây lỗi phổ biến của người Việt, đồng thời rèn luyện kỹ năng đánh giá và lọc tài liệu tham khảo hàn lâm tin cậy.</p>
                 
@@ -1065,7 +1307,7 @@
                             </tr>
                         </thead>
                         <tbody id="source-table-body">
-                            <!-- Sẽ render bằng JS hoặc để sẵn ở đây -->
+                            <!-- Injected by JS -->
                         </tbody>
                     </table>
                 </div>
@@ -1079,9 +1321,8 @@
                 <p>Để đánh giá một nguồn tài liệu, không thể chỉ dựa vào tiêu đề mà phải xem xét cơ sở dữ liệu thực nghiệm, độ uy tín của tạp chí khoa học và năm xuất bản để đảm bảo tính thời sự.</p>
             `,
             p3: `
-                <div class="section-title-wrapper">
-                    <div class="section-icon"></div>
-                    <h2 class="section-title">🤖 BÀI 3: THỰC NGHIỆM PROMPT ENGINEERING 3 TÁC VỤ</h2>
+                <div class="modal-signboard">
+                    <h2 class="section-title" style="color:#fff;">🤖 BÀI 3: THỰC NGHIỆM PROMPT ENGINEERING 3 TÁC VỤ</h2>
                 </div>
                 <p><strong>Mục tiêu bài tập:</strong> Làm chủ kỹ thuật điều khiển AI thông qua cấu trúc hóa câu lệnh chặt chẽ, tối ưu hiệu quả xử lý các tác vụ phức tạp trong học tập.</p>
 
@@ -1103,9 +1344,8 @@
                 </ul>
             `,
             p4: `
-                <div class="section-title-wrapper">
-                    <div class="section-icon"></div>
-                    <h2 class="section-title">🤝 BÀI 4: BÁO CÁO CỘNG TÁC SỐ TRÊN KHÔNG GIAN ẢO</h2>
+                <div class="modal-signboard">
+                    <h2 class="section-title" style="color:#fff;">🤝 BÀI 4: BÁO CÁO CỘNG TÁC SỐ TRÊN KHÔNG GIAN ẢO</h2>
                 </div>
                 <p><strong>Mục tiêu bài tập:</strong> Vượt qua các thách thức của việc làm việc trực tuyến từ xa, đồng bộ tiến trình của nhóm 6 để tối ưu hóa hiệu quả thực hiện dự án chung.</p>
 
@@ -1141,9 +1381,8 @@
                 <p>Cộng tác trực tuyến hiệu quả không nằm ở việc nhắn tin liên tục, mà nằm ở việc định hình một quy trình làm việc trực quan, minh bạch và có tính kỷ luật cao.</p>
             `,
             p5: `
-                <div class="section-title-wrapper">
-                    <div class="section-icon"></div>
-                    <h2 class="section-title">🎨 BÀI 5: QUY TRÌNH THIẾT KẾ INFOGRAPHIC NGÔN NGỮ MẠNG</h2>
+                <div class="modal-signboard">
+                    <h2 class="section-title" style="color:#fff;">🎨 BÀI 5: QUY TRÌNH THIẾT KẾ INFOGRAPHIC NGÔN NGỮ MẠNG</h2>
                 </div>
                 <p><strong>Mục tiêu bài tập:</strong> Ứng dụng tích hợp đa công cụ AI tạo sinh để nghiên cứu, sáng tạo nội dung và hoàn thiện một ấn phẩm truyền thông trực quan chất lượng cao về chủ đề: <em>"Ngôn ngữ mạng của giới trẻ trên MXH Việt Nam"</em>.</p>
                 
@@ -1159,9 +1398,8 @@
                 <p>Dù Stable Diffusion và Canva AI rất nhanh nhưng chất lượng chi tiết đôi khi bị lỗi hoặc bố cục còn mang tính rập khuôn, thiếu cá tính hóa. Để có một infographic chuẩn mực học thuật và có chiều sâu thẩm mỹ, con người bắt buộc phải trực tiếp biên tập nội dung, chọn lọc và tinh chỉnh từng điểm ảnh một cách có chủ đích.</p>
             `,
             p6: `
-                <div class="section-title-wrapper">
-                    <div class="section-icon"></div>
-                    <h2 class="section-title">🛡️ BÀI 6: AN TOÀN VÀ LIÊM CHÍNH HỌC THUẬT TRONG THỜI ĐẠI AI</h2>
+                <div class="modal-signboard">
+                    <h2 class="section-title" style="color:#fff;">🛡️ BÀI 6: AN TOÀN VÀ LIÊM CHÍNH HỌC THUẬT TRONG THỜI ĐẠI AI</h2>
                 </div>
                 <p><strong>Mục tiêu bài tập:</strong> Tìm hiểu khung chính sách kiểm soát đạo văn, thực nghiệm tính chính xác dữ liệu của AI và xây dựng bộ quy tắc ứng xử đạo đức số cho cá nhân.</p>
 
@@ -1180,7 +1418,7 @@
                     <li>Luôn đọc kỹ tài liệu gốc và ghi chép trước khi dùng AI để tóm tắt.</li>
                     <li>Chỉ dùng AI như một công cụ xử lý thông tin thô ban đầu (tiền xử lý).</li>
                     <li>Tự mình thực hiện toàn bộ khâu tư duy phản biện, phân tích và đưa ra kết luận.</li>
-                    <li>Luôn kiểm tra kỹ lưỡng mọi số liệu và nguồn trích dẫn mà AI đưa ra.</li>
+                    <li>Luôn kiểm tra kỹ lường mọi số liệu và nguồn trích dẫn mà AI đưa ra.</li>
                     <li>Khai báo minh bạch các công cụ và cách thức ứng dụng AI trong bài nộp.</li>
                     <li>Tôn trọng quyền sở hữu trí tuệ, không đạo văn gián tiếp từ các diễn giải của AI.</li>
                     <li>Không sử dụng AI để tạo ra "sự đồng thuận giả tạo" - tôn trọng sự đa dạng của các nguồn nghiên cứu.</li>
@@ -1188,7 +1426,6 @@
             `
         };
 
-        // Complete 10 articles database (p2)
         const articlesDb = [
             { id: 1, title: "An analysis of grammatical errors in the Chinese proficiency oral test...", author: "Nguyễn, Đ. H.", year: "2023", journal: "VNU Journal of Foreign Studies", method: "Thực nghiệm, phân tích lỗi", impact: "Trung bình", update: "Cao", detail: "Phân tích có hệ thống các lỗi ngữ pháp thực tế của sinh viên Việt Nam trong kỳ thi nói tiếng Trung. Tài liệu có giá trị đối chiếu thực tiễn cực kỳ cao." },
             { id: 2, title: "A survey on common errors made by Vietnamese students in learning Chinese", author: "Đỗ, T. P.", year: "2018", journal: "Tạp chí Ngôn ngữ và Văn hóa", method: "Khảo sát, tổng hợp", impact: "Trung bình", update: "Trung bình", detail: "Khảo sát diện rộng về các thói quen sử dụng sai ngữ pháp do hiểu sai logic ngôn ngữ mẹ đẻ." },
@@ -1202,7 +1439,6 @@
             { id: 10, title: "Chinese: A comprehensive grammar (2nd ed.)", author: "Yip, P. & Rimmington, D.", year: "2015", journal: "Routledge", method: "Mô tả + tham khảo", impact: "Cao", update: "Cao", detail: "Cuốn ngữ pháp toàn diện nhất, giải thích tỉ mỉ các hiện tượng câu chữ đặc biệt như câu chữ 把 và 被." }
         ];
 
-        // Prompt Engineering Sandbox database (p3)
         const promptsDb = [
             {
                 basic: 'Tóm tắt tài liệu "Ngôn ngữ mạng của giới trẻ Trung Quốc hiện nay và sự ảnh hưởng đến Việt Nam"',
@@ -1222,13 +1458,13 @@
         ];
 
         function openProject(pId) {
+            synth.levelUp();
             const modal = document.getElementById('project-modal');
             const content = document.getElementById('modal-dynamic-content');
             content.innerHTML = projectDetailedData[pId] || '<p>Không tìm thấy nội dung.</p>';
             modal.style.display = 'flex';
             document.body.style.overflow = 'hidden';
 
-            // Post-rendering hooks for interactive elements
             if(pId === 'p2') {
                 renderSourceSwapper();
             } else if(pId === 'p3') {
@@ -1237,11 +1473,16 @@
         }
 
         function closeModal() {
+            synth.click();
             document.getElementById('project-modal').style.display = 'none';
             document.body.style.overflow = '';
         }
 
-        // Render Source Swapper for Task 2
+        window.addEventListener('keydown', (e) => {
+            if(e.key === 'Escape') closeModal();
+        });
+
+        // Render Source Swapper (Task 2)
         function renderSourceSwapper() {
             const tbody = document.getElementById('source-table-body');
             tbody.innerHTML = articlesDb.map(art => `
@@ -1257,13 +1498,14 @@
 
             const tabsContainer = document.getElementById('swapper-tabs-container');
             tabsContainer.innerHTML = articlesDb.map((art, idx) => `
-                <button class="swapper-tab ${idx === 0 ? 'active' : ''}" onclick="selectSource(${idx})">Nguồn ${art.id}</button>
+                <button class="swapper-tab ${idx === 0 ? 'active' : ''}" onclick="selectSource(${idx})">${art.id}</button>
             `).join('');
             
             selectSource(0);
         }
 
         function selectSource(index) {
+            synth.click();
             const tabs = document.querySelectorAll('.swapper-tab');
             tabs.forEach((tab, idx) => {
                 tab.classList.toggle('active', idx === index);
@@ -1275,14 +1517,15 @@
                 <p><strong>Tiêu đề:</strong> ${art.title}</p>
                 <p><strong>Tác giả:</strong> ${art.author} (${art.year}) | <strong>Nguồn:</strong> ${art.journal}</p>
                 <p><strong>Phương pháp:</strong> ${art.method} | <strong>Mức độ ảnh hưởng:</strong> ${art.impact}</p>
-                <p style="background: rgba(255,255,255,0.5); padding: 10px; border-radius: 4px; border-left: 3px solid var(--color-wood-light);">
+                <p style="background: var(--color-wood-cream); padding: 10px; border-left: 4px solid var(--color-wood-light);">
                     <strong>Chi tiết đánh giá:</strong> ${art.detail}
                 </p>
             `;
         }
 
-        // Sandbox controller for Task 3
+        // Sandbox controller (Task 3)
         function switchSandbox(taskIndex) {
+            synth.click();
             const tabs = document.querySelectorAll('.sandbox-tab');
             tabs.forEach((tab, idx) => {
                 tab.classList.toggle('active', idx === taskIndex);
@@ -1293,15 +1536,15 @@
             container.innerHTML = `
                 <div class="comparison-layout">
                     <div class="comp-card bad">
-                        <strong style="color: #e25a5a; font-size: 12px; font-family: var(--font-accent);">❌ PROMPT CƠ BẢN (ÍT HIỆU QUẢ)</strong>
+                        <strong style="color: #e25a5a; font-size: 12px; font-family: 'Quicksand', sans-serif;">❌ PROMPT CƠ BẢN (ÍT HIỆU QUẢ)</strong>
                         <div class="sandbox-code-block">${data.basic}</div>
                     </div>
                     <div class="comp-card" style="border-color: var(--color-gold); background: rgba(226, 156, 51, 0.05);">
-                        <strong style="color: var(--color-gold); font-size: 12px; font-family: var(--font-accent);">⚠️ PROMPT CẢI TIẾN (TRUNG BÌNH)</strong>
+                        <strong style="color: var(--color-gold); font-size: 12px; font-family: 'Quicksand', sans-serif;">⚠️ PROMPT CẢI TIẾN (TRUNG BÌNH)</strong>
                         <div class="sandbox-code-block">${data.improved}</div>
                     </div>
                     <div class="comp-card good">
-                        <strong style="color: var(--color-leaf-bright); font-size: 12px; font-family: var(--font-accent);">💎 PROMPT NÂNG CAO (RẤT HIỆU QUẢ)</strong>
+                        <strong style="color: var(--color-leaf-bright); font-size: 12px; font-family: 'Quicksand', sans-serif;">💎 PROMPT NÂNG CAO (RẤT HIỆU QUẢ)</strong>
                         <div class="sandbox-code-block">${data.advanced}</div>
                     </div>
                 </div>
