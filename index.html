@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chu Quang Đại Portfolio</title>
+    <title>Chu Quang Đại - Digital Portfolio</title>
     <!-- Nhúng Font chữ hiển thị chuẩn chỉ dấu tiếng Việt -->
-    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Quicksand:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Quicksand:wght@600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --color-wood-dark: #2c1e12;
+            --color-wood-dark: #23160c;
             --color-wood-light: #6a4c33;
-            --color-wood-cream: #f4edd8;
+            --color-wood-cream: #fbf5e6;
             --color-gold: #c68923;
-            --color-glow: #ffd685;
-            --color-leaf-dark: #385d1e;
-            --color-leaf-bright: #629c36;
-            --color-glass: rgba(30, 21, 13, 0.75);
-            --color-text-dark: #2c1d11;
+            --color-glow: #ffc24b;
+            --color-leaf-dark: #2a4614;
+            --color-leaf-bright: #5c8e32;
+            --color-glass: rgba(28, 19, 11, 0.82);
+            --color-text-dark: #23160c;
             --color-text-light: #ebdcb9;
             --mc-border-dark: #3c3c3c;
             --mc-border-light: #dbdbdb;
@@ -25,14 +25,14 @@
         }
 
         .night-mode {
-            --color-wood-cream: #282f35;
-            --color-glow: #67ff9e;
-            --color-leaf-bright: #3c9c6f;
+            --color-wood-cream: #20272c;
+            --color-glow: #4fff84;
+            --color-leaf-bright: #328e5e;
             --color-text-dark: #ebdcb9;
-            --color-text-light: #a4b3be;
-            --color-glass: rgba(15, 20, 25, 0.85);
-            --color-wood-dark: #12181d;
-            --color-wood-light: #3d4f5d;
+            --color-text-light: #99aab8;
+            --color-glass: rgba(12, 17, 21, 0.88);
+            --color-wood-dark: #101518;
+            --color-wood-light: #384956;
         }
 
         * {
@@ -65,7 +65,7 @@
         }
 
         .night-mode .bg-layer {
-            filter: hue-rotate(140deg) brightness(0.4) saturate(0.8);
+            filter: hue-rotate(140deg) brightness(0.35) saturate(0.8);
         }
 
         .dreamy-overlay {
@@ -78,7 +78,7 @@
         }
 
         .night-mode .dreamy-overlay {
-            background: radial-gradient(circle at 80% 20%, rgba(103, 255, 158, 0.12) 0%, rgba(0,0,0,0) 80%);
+            background: radial-gradient(circle at 80% 20%, rgba(79, 255, 132, 0.12) 0%, rgba(0,0,0,0) 80%);
         }
 
         #particle-canvas {
@@ -90,7 +90,7 @@
 
         /* Layout Container */
         .main-container {
-            max-width: 1100px;
+            max-width: 1050px;
             margin: 0 auto;
             padding: 40px 16px 120px 16px;
             display: flex;
@@ -226,7 +226,7 @@
 
         .tag-special {
             background: var(--color-leaf-dark);
-            box-shadow: inset -2px -2px 0px #223c10;
+            box-shadow: inset -2px -2px 0px #1d320d;
         }
 
         /* Minecraft Styled Hotbar Navigation */
@@ -309,7 +309,7 @@
             bottom: -44px;
         }
 
-        /* Content Blocks */
+        /* Cozy Wood Box Frame */
         .cozy-card {
             background: var(--color-wood-cream);
             border: 6px solid var(--color-wood-dark);
@@ -328,29 +328,149 @@
             pointer-events: none;
         }
 
+        /* Minecraft Oak Signboards for Section Titles */
         .section-title-wrapper {
-            border-bottom: 4px dashed var(--color-wood-light);
-            padding-bottom: 12px;
+            background: #85542f;
+            border: 4px solid #3a220d;
+            padding: 10px 16px;
             margin-bottom: 25px;
             display: flex;
             align-items: center;
             gap: 12px;
+            box-shadow: 0 4px 0px rgba(0,0,0,0.3);
+            position: relative;
+        }
+
+        .section-title-wrapper::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 20px;
+            width: 8px;
+            height: 12px;
+            background: #3a220d;
+        }
+
+        .section-title-wrapper::before {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            right: 20px;
+            width: 8px;
+            height: 12px;
+            background: #3a220d;
         }
 
         .section-icon {
             width: 16px;
             height: 16px;
             background: var(--color-glow);
-            border: 3px solid var(--color-wood-dark);
+            border: 3px solid #3a220d;
             box-shadow: inset -2px -2px 0px rgba(0,0,0,0.2);
         }
 
         .section-title {
             font-family: 'Quicksand', sans-serif;
-            font-size: 22px;
+            font-size: 19px;
             font-weight: 800;
-            color: var(--color-wood-dark);
-            text-shadow: 1px 1px 0px rgba(255,255,255,0.5);
+            color: #fff;
+            text-shadow: 2px 2px 0px #000;
+        }
+
+        /* Advancements Unlocked / Quest Toast Style */
+        .advancement-toast {
+            background: #212121;
+            border: 4px solid var(--color-wood-dark);
+            border-top-color: #555;
+            border-left-color: #555;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 4px 4px 0px #000;
+            color: #fff;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .advancement-badge {
+            background: var(--color-glow);
+            color: #000;
+            padding: 2px 8px;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 800;
+            font-size: 11px;
+            border: 2px solid #000;
+            box-shadow: 1.5px 1.5px 0px rgba(0,0,0,0.5);
+            text-transform: uppercase;
+        }
+
+        .advancement-title {
+            color: #55ff55;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 800;
+            font-size: 14px;
+            text-shadow: 1.5px 1.5px 0px #000;
+        }
+
+        /* Questbook Style Paragraph Frame */
+        .quest-book-box {
+            background: #f7eed8;
+            border: 4px solid #3c3c3c;
+            padding: 24px;
+            box-shadow: inset 4px 4px 0px #fff, inset -4px -4px 0px #c6bba4, 4px 4px 0px rgba(0,0,0,0.1);
+            color: #2a1b0c;
+            margin-bottom: 20px;
+            border-radius: 2px;
+            transition: background var(--transition-speed);
+        }
+
+        .night-mode .quest-book-box {
+            background: #2b333a;
+            box-shadow: inset 4px 4px 0px #414c56, inset -4px -4px 0px #1a2024;
+            color: #dbdbdb;
+            border-color: #12181d;
+        }
+
+        .drop-cap {
+            float: left;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 42px;
+            line-height: 34px;
+            padding-top: 4px;
+            padding-right: 8px;
+            padding-left: 3px;
+            font-weight: 800;
+            color: #b16c2c;
+            text-shadow: 2px 2px 0px #000;
+        }
+
+        .night-mode .drop-cap {
+            color: var(--color-glow);
+        }
+
+        /* Warning & Knowledge Badges */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11.5px;
+            font-weight: 800;
+            padding: 4px 10px;
+            border: 2.5px solid #000;
+            color: #fff;
+            text-shadow: 1px 1px 0px #000;
+            margin-bottom: 10px;
+        }
+
+        .badge-warning {
+            background: #ae1818;
+            box-shadow: inset -2px -2px 0px #610c0c;
+        }
+
+        .badge-success {
+            background: #3c9c6f;
+            box-shadow: inset -2px -2px 0px #1c5c3d;
         }
 
         /* Toggle Active Sections */
@@ -412,14 +532,6 @@
             display: flex;
             align-items: center;
             gap: 8px;
-        }
-
-        .project-block p {
-            font-size: 14px;
-            color: var(--color-text-dark);
-            margin: 0;
-            flex-grow: 1;
-            line-height: 1.6;
         }
 
         /* Classic Minecraft Buttons UI */
@@ -554,15 +666,15 @@
 
         /* Styled list and tables */
         .report-section h4 {
-            font-size: 16px;
+            font-size: 16.5px;
             color: var(--color-wood-dark);
-            margin: 22px 0 10px 0;
-            font-weight: 700;
+            margin: 24px 0 12px 0;
+            font-weight: 800;
             display: flex;
             align-items: center;
             gap: 8px;
-            border-left: 4px solid var(--color-leaf-bright);
-            padding-left: 10px;
+            border-left: 5px solid var(--color-leaf-bright);
+            padding-left: 12px;
         }
 
         .report-section ul, .report-section ol {
@@ -572,7 +684,7 @@
 
         .report-section li {
             margin-bottom: 8px;
-            line-height: 1.65;
+            line-height: 1.7;
             color: var(--color-text-dark);
         }
 
@@ -667,10 +779,10 @@
         .checklist-item {
             display: flex;
             align-items: flex-start;
-            gap: 10px;
+            gap: 12px;
             background: rgba(255, 255, 255, 0.4);
             border: 3px solid var(--color-wood-dark);
-            padding: 12px 14px;
+            padding: 14px 16px;
             transition: all 0.15s ease;
         }
 
@@ -680,8 +792,8 @@
         }
 
         .check-box {
-            width: 20px;
-            height: 20px;
+            width: 22px;
+            height: 22px;
             background: #fff;
             border: 3px solid var(--color-wood-dark);
             flex-shrink: 0;
@@ -690,13 +802,13 @@
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            font-size: 11px;
+            font-size: 12px;
             color: var(--color-leaf-bright);
         }
 
         .check-content {
             font-size: 14.5px;
-            line-height: 1.5;
+            line-height: 1.6;
         }
 
         /* Kanban Board Simulator (Task 4) */
@@ -729,6 +841,94 @@
             font-size: 12px;
             margin-bottom: 8px;
             box-shadow: inset -2px -2px 0px #dbdbdb;
+        }
+
+        /* Crafting Grid Simulation */
+        .crafting-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            background: #b8b8b8;
+            border: 4px solid #3c3c3c;
+            padding: 20px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .crafting-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4px;
+            background: #8f8f8f;
+            border: 4px inset #3c3c3c;
+            padding: 4px;
+        }
+
+        .crafting-cell {
+            width: 48px;
+            height: 48px;
+            background: #8f8f8f;
+            border: 3px inset #3c3c3c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: bold;
+            color: #fff;
+            text-align: center;
+        }
+
+        .crafting-arrow {
+            font-size: 24px;
+            font-weight: 800;
+            color: #3c3c3c;
+        }
+
+        .crafting-result {
+            width: 60px;
+            height: 60px;
+            background: #8f8f8f;
+            border: 4px inset #3c3c3c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            color: var(--color-glow);
+            text-shadow: 1px 1px 0px #000;
+        }
+
+        /* Infographic Production Pipeline */
+        .pipeline-holder {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.4);
+            border: 3px solid var(--color-wood-dark);
+            padding: 15px;
+            margin: 20px 0;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .pipeline-node {
+            background: #ebdcb9;
+            border: 3px solid var(--color-wood-dark);
+            padding: 8px 12px;
+            border-radius: 4px;
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        .pipeline-node strong {
+            display: block;
+            font-size: 13px;
+            color: var(--color-leaf-dark);
+        }
+
+        .pipeline-node span {
+            font-size: 11px;
         }
 
         /* Prompt Sandbox styling */
@@ -889,17 +1089,26 @@
                     <div class="section-icon"></div>
                     <h2 class="section-title">✨ MỤC TIÊU DỰ ÁN PORTFOLIO</h2>
                 </div>
-                <p>
-                    Chào bạn! Dự án Portfolio kỹ thuật số cá nhân này là một cột mốc thu hoạch lớn của mình sau khóa học <strong>Nhập môn Công nghệ số và Ứng dụng trí tuệ nhân tạo</strong>. Không chỉ dừng lại ở một công cụ báo cáo điểm số cơ bản, mục tiêu sâu sắc hơn của Portfolio này là:
-                </p>
-                <ul style="padding-left: 20px; margin-bottom: 20px;">
-                    <li style="margin-bottom: 8px; line-height: 1.6; color: var(--color-text-dark);"><strong>Hệ thống hóa năng lực cá nhân:</strong> Biến những lý thuyết trừu tượng về tệp tin, dữ liệu, prompt engineering và cộng tác trực tuyến thành một sản phẩm thực tế có cấu trúc, mạch lạc.</li>
-                    <li style="margin-bottom: 8px; line-height: 1.6; color: var(--color-text-dark);"><strong>Định hình tư duy AI thế hệ mới:</strong> Minh chứng khả năng làm chủ các công cụ hỗ trợ thông minh dựa trên một nền tảng liêm chính, tôn trọng tri thức đích thực.</li>
-                    <li style="margin-bottom: 8px; line-height: 1.6; color: var(--color-text-dark);"><strong>Sự giao thoa đầy cảm hứng:</strong> Thể hiện tư duy thẩm mỹ mộng mơ, hiện đại qua không gian giao diện lấy cảm hứng từ những khối Minecraft bình yên và ấm áp.</li>
-                </ul>
-                <p>
-                    Mong rằng những nội dung thực tiễn được hiển thị dưới đây sẽ mang lại cho bạn một góc nhìn chân thực, khách quan và thú vị nhất về nỗ lực rèn luyện của một ULISer thời đại số!
-                </p>
+
+                <!-- MC Achievement Unlocked Toast -->
+                <div class="advancement-toast">
+                    <span class="advancement-badge">Thành Tựu Đạt Được!</span>
+                    <span class="advancement-title">🏆 Khởi Đầu Hành Trình Số</span>
+                </div>
+
+                <!-- Questbook Styled Text Layout -->
+                <div class="quest-book-box">
+                    <span class="drop-cap">C</span>
+                    <p>
+                        hào bạn, dự án Portfolio kỹ thuật số cá nhân này là một cột mốc thu hoạch lớn của mình sau khóa học <strong>Nhập môn Công nghệ số và Ứng dụng trí tuệ nhân tạo</strong>. Không chỉ dừng lại ở một công cụ báo cáo điểm số cơ bản, mục tiêu sâu sắc của Portfolio này là:
+                    </p>
+                    <p>
+                        <strong>Hệ thống hóa năng lực cá nhân:</strong> Biến những lý thuyết trừu tượng về quản trị dữ liệu, phương pháp phân loại thông tin và cộng tác số thành một sản phẩm có tính tương tác trực quan cao.
+                    </p>
+                    <p>
+                        <strong>Tự do hóa tư duy số:</strong> Minh chứng khả năng làm chủ các công cụ hỗ trợ thông minh AI dựa trên nền tảng đạo đức liêm chính học thuật vững vàng của một tân sinh viên trường Ngoại ngữ.
+                    </p>
+                </div>
             </div>
         </section>
 
@@ -974,20 +1183,29 @@
                     <h2 class="section-title">🌟 BÁO CÁO TỔNG KẾT HÀNH TRÌNH</h2>
                 </div>
                 
-                <h3 style="font-size: 16.5px; font-weight: 700; color: var(--color-wood-dark); margin-bottom: 12px;">✅ Thuận lợi trong quá trình thực hiện:</h3>
-                <p>
-                    Mình may mắn được tiếp cận các công cụ số cực kỳ trực quan và mạnh mẽ (Google Workspace, Trello, Canvas). Giáo trình và định hướng học tập của giảng viên rất khoa học, từng bài thực hành đều có liên kết trực tiếp để giải quyết các bài toán ngôn ngữ thực tế. Sự phát triển vượt trội của các dòng mô hình ngôn ngữ lớn (Claude, ChatGPT) cũng giúp mình dễ dàng tìm kiếm ý tưởng phân tích ban đầu.
-                </p>
+                <!-- Cozy Parchment Style Box for Reflection -->
+                <div class="quest-book-box">
+                    <span class="status-badge badge-success">🧠 Steve's Knowledge</span>
+                    <h3 style="font-size: 16.5px; font-weight: 800; color: var(--color-wood-dark); margin-bottom: 12px;">✅ Thuận lợi trong quá trình thực hiện:</h3>
+                    <p>
+                        Mình may mắn được tiếp cận các công cụ số cực kỳ trực quan và mạnh mẽ (Google Workspace, Trello, Canvas). Giáo trình và định hướng học tập của giảng viên rất khoa học, từng bài thực hành đều có liên kết trực tiếp để giải quyết các bài toán ngôn ngữ thực tế. Sự phát triển vượt trội của các dòng mô hình ngôn ngữ lớn (Claude, ChatGPT) cũng giúp mình dễ dàng tìm kiếm ý tưởng phân tích ban đầu.
+                    </p>
+                </div>
 
-                <h3 style="font-size: 16.5px; font-weight: 700; color: var(--color-wood-dark); margin: 20px 0 12px 0;">⚠️ Khó khăn đã phải đối diện:</h3>
-                <p>
-                    Việc viết prompt chuẩn xác ban đầu rất khó, đôi khi AI đưa ra câu trả lời sai lệch (ảo tưởng dữ liệu) khiến mình mất khá nhiều thời gian để đối chiếu chéo. Ngoài ra, việc duy trì sự gắn kết và phân chia trách nhiệm rõ ràng khi làm việc nhóm từ xa đôi lúc bị trễ nhịp do thói quen bất đồng bộ thời gian của các thành viên.
-                </p>
+                <div class="quest-book-box">
+                    <span class="status-badge badge-warning">💥 Creeper Threat</span>
+                    <h3 style="font-size: 16.5px; font-weight: 800; color: var(--color-wood-dark); margin-bottom: 12px;">⚠️ Khó khăn đã phải đối diện:</h3>
+                    <p>
+                        Việc viết prompt chuẩn xác ban đầu rất khó, đôi khi AI đưa ra câu trả lời sai lệch (ảo tưởng dữ liệu) khiến mình mất khá nhiều thời gian để đối chiếu chéo. Ngoài ra, việc duy trì sự gắn kết và phân chia trách nhiệm rõ ràng khi làm việc nhóm từ xa đôi lúc bị trễ nhịp do thói quen bất đồng bộ thời gian của các thành viên.
+                    </p>
+                </div>
 
-                <h3 style="font-size: 16.5px; font-weight: 700; color: var(--color-wood-dark); margin: 20px 0 12px 0;">💡 Bài học kinh nghiệm xương máu:</h3>
-                <p>
-                    Công nghệ chỉ thực sự mạnh khi có sự định hướng thông thái của con người. Đối với một sinh viên Ngoại ngữ, bài học lớn nhất là phải rèn luyện tư duy phản biện liên tục, không được sao chép máy móc bất kỳ kết quả nào của AI. Sự chỉnh chu, sạch sẽ trong việc sắp xếp thư mục và quản lý thông tin chính là gốc rễ quyết định tiến độ của bất cứ dự án phức tạp nào trong tương lai.
-                </p>
+                <div class="quest-book-box" style="border-color: var(--color-gold);">
+                    <h3 style="font-size: 16.5px; font-weight: 800; color: var(--color-wood-dark); margin-bottom: 12px;">💡 Bài học kinh nghiệm xương máu:</h3>
+                    <p>
+                        Công nghệ chỉ thực sự mạnh khi có sự định hướng thông thái của con người. Đối với một sinh viên Ngoại ngữ, bài học lớn nhất là phải rèn luyện tư duy phản biện liên tục, không được sao chép máy móc bất kỳ kết quả nào của AI. Sự chỉnh chu, sạch sẽ trong việc sắp xếp thư mục và quản lý thông tin chính là gốc rễ quyết định tiến độ của bất cứ dự án phức tạp nào trong tương lai.
+                    </p>
+                </div>
             </div>
         </section>
 
@@ -1049,22 +1267,10 @@
             }
         };
 
-        // Scroll Hotbar Navigation
+        // Tab selection logic
         const slots = document.querySelectorAll('.mc-slot');
         const sections = document.querySelectorAll('.content-section');
         let currentSlotIdx = 0;
-
-        window.addEventListener('wheel', (e) => {
-            // Scroll hotbar navigation only when modal is not active
-            if (document.getElementById('project-modal').style.display === 'flex') return;
-            
-            if (e.deltaY > 0) {
-                currentSlotIdx = (currentSlotIdx + 1) % slots.length;
-            } else {
-                currentSlotIdx = (currentSlotIdx - 1 + slots.length) % slots.length;
-            }
-            slots[currentSlotIdx].click();
-        }, { passive: true });
 
         function switchTab(slotElement) {
             synth.click();
@@ -1141,7 +1347,7 @@
             }
             update() {
                 this.y += this.speedY;
-                this.x += this.speedX + Math.sin(this.y / 25) * 0.2;
+                this.x += this.speedX + Math.sin(this.y / 25) * 0.25;
                 this.rotation += this.rotationSpeed;
                 if (this.y > canvas.height + 15 || this.x < -15 || this.x > canvas.width + 15) {
                     this.reset();
@@ -1168,7 +1374,7 @@
                 blockColor = '#629c36'; // Green leaves
             } else if (target.closest('.mc-hotbar') || target.closest('.mc-slot')) {
                 blockColor = '#8f8f8f'; // Stone blocks
-            } else if (target.closest('header') || target.closest('.cozy-card')) {
+            } else if (target.closest('header') || target.closest('.cozy-card') || target.closest('.quest-book-box')) {
                 blockColor = '#6a4c33'; // Wood blocks
             } else if (target.closest('.mc-lever')) {
                 blockColor = '#ff5555'; // Redstone dust
@@ -1221,8 +1427,11 @@
                 <div class="modal-signboard">
                     <h2 class="section-title" style="color:#fff;">📂 BÀI 1: THAO TÁC CƠ BẢN VỚI TỆP VÀ THƯ MỤC</h2>
                 </div>
-                <p><strong>Mục tiêu bài tập:</strong> Thiết lập cấu trúc hệ lưu trữ tối ưu của cá nhân, loại bỏ thói quen lưu file lộn xộn để tăng 200% hiệu suất kiểm soát thông tin bài học.</p>
                 
+                <div class="quest-book-box">
+                    <p><strong>Mục tiêu bài tập:</strong> Thiết lập cấu trúc hệ lưu trữ tối ưu của cá nhân, loại bỏ thói quen lưu file lộn xộn để tăng 200% hiệu suất kiểm soát thông tin bài học.</p>
+                </div>
+
                 <h4>🛠️ Tiến trình thực nghiệm 12 bước chi tiết:</h4>
                 <div class="step-checklist">
                     <div class="checklist-item">
@@ -1259,7 +1468,7 @@
                     </div>
                     <div class="checklist-item">
                         <div class="check-box">✓</div>
-                        <div class="check-content"><strong>Bước 9: Sao lưu dữ liệu (Backup)</strong> - Tạo thư mục dự phòng mang tên "DiChuyen" và nhân bản các tệp tin ghi chú quan trọng sang đây phòng ngừa sự cố mất mát.</div>
+                        <div class="check-content"><strong>Bước 9: Sao lưu dữ liệu (Backup)</strong> - Tạo thư mục phụ "DiChuyen" và nhân bản các tệp tin ghi chú quan trọng sang đây phòng ngừa sự cố mất mát.</div>
                     </div>
                     <div class="checklist-item">
                         <div class="check-box">✓</div>
@@ -1275,15 +1484,20 @@
                     </div>
                 </div>
 
-                <h4>💡 Bài học kinh nghiệm:</h4>
-                <p>Một không gian ảo sạch sẽ chính là tiền đề cho một tư duy minh mẫn. Sắp xếp dữ liệu giống như việc phân loại rương trong Minecraft - nó giúp tốc độ hoàn thành công việc của mình nhanh hơn gấp nhiều lần.</p>
+                <div class="quest-book-box" style="border-color: var(--color-gold);">
+                    <h4>💡 Bài học kinh nghiệm:</h4>
+                    <p>Một không gian ảo sạch sẽ chính là tiền đề cho một tư duy minh mẫn. Sắp xếp dữ liệu giống như việc phân loại rương trong Minecraft - nó giúp tốc độ hoàn thành công việc của mình nhanh hơn gấp nhiều lần.</p>
+                </div>
             `,
             p2: `
                 <div class="modal-signboard">
                     <h2 class="section-title" style="color:#fff;">🔎 BÀI 2: KHAI THÁC NGỮ PHÁP TIẾNG TRUNG & ĐÁNH GIÁ 10 NGUỒN</h2>
                 </div>
-                <p><strong>Mục tiêu bài tập:</strong> Khai thác học thuật, so sánh đối chiếu ngữ pháp Việt - Trung để chỉ ra nguyên nhân gây lỗi phổ biến của người Việt, đồng thời rèn luyện kỹ năng đánh giá và lọc tài liệu tham khảo hàn lâm tin cậy.</p>
                 
+                <div class="quest-book-box">
+                    <p><strong>Mục tiêu bài tập:</strong> Khai thác học thuật, so sánh đối chiếu ngữ pháp Việt - Trung để chỉ ra nguyên nhân gây lỗi phổ biến của người Việt, đồng thời rèn luyện kỹ năng đánh giá và lọc tài liệu tham khảo hằng lâm tin cậy.</p>
+                </div>
+
                 <h4>🔍 Các rào cản ngữ pháp tiếng Trung đặc thù:</h4>
                 <ul>
                     <li><strong>Chuyển di tiêu cực (Negative Transfer):</strong> Xu hướng người Việt bê nguyên xi cấu trúc tiếng mẹ đẻ dịch từng từ (word-by-word) sang dẫn đến việc nói sai ngữ pháp nghiêm trọng.</li>
@@ -1317,14 +1531,19 @@
                     <div class="swapper-body" id="swapper-content-body">Click chọn một nguồn phía trên để xem đánh giá chi tiết...</div>
                 </div>
 
-                <h4>💡 Bài học kinh nghiệm:</h4>
-                <p>Để đánh giá một nguồn tài liệu, không thể chỉ dựa vào tiêu đề mà phải xem xét cơ sở dữ liệu thực nghiệm, độ uy tín của tạp chí khoa học và năm xuất bản để đảm bảo tính thời sự.</p>
+                <div class="quest-book-box" style="border-color: var(--color-gold);">
+                    <h4>💡 Bài học kinh nghiệm:</h4>
+                    <p>Để đánh giá một nguồn tài liệu, không thể chỉ dựa vào tiêu đề mà phải xem xét cơ sở dữ liệu thực nghiệm, độ uy tín của tạp chí khoa học và năm xuất bản để đảm bảo tính thời sự.</p>
+                </div>
             `,
             p3: `
                 <div class="modal-signboard">
                     <h2 class="section-title" style="color:#fff;">🤖 BÀI 3: THỰC NGHIỆM PROMPT ENGINEERING 3 TÁC VỤ</h2>
                 </div>
-                <p><strong>Mục tiêu bài tập:</strong> Làm chủ kỹ thuật điều khiển AI thông qua cấu trúc hóa câu lệnh chặt chẽ, tối ưu hiệu quả xử lý các tác vụ phức tạp trong học tập.</p>
+                
+                <div class="quest-book-box">
+                    <p><strong>Mục tiêu bài tập:</strong> Làm chủ kỹ thuật điều khiển AI thông qua cấu trúc hóa câu lệnh chặt chẽ, tối ưu hiệu quả xử lý các tác vụ phức tạp trong học tập.</p>
+                </div>
 
                 <div class="sandbox-tabs">
                     <button class="sandbox-tab active" onclick="switchSandbox(0)">Tác vụ 1: Tóm tắt văn bản</button>
@@ -1336,18 +1555,23 @@
                     <!-- Dynamic content injected here -->
                 </div>
 
-                <h4>💡 Phân tích lý do Prompt nâng cao luôn hiệu quả vượt trội:</h4>
-                <ul>
-                    <li><strong>Xác lập vai trò chuyên gia (Role):</strong> Ép AI tự hiệu chỉnh bộ thuật ngữ chuyên ngành phù hợp với vị thế.</li>
-                    <li><strong>Cấu trúc hóa rõ ràng (Chain of Thought):</strong> Định hướng cho AI suy luận từng bước, loại bỏ hiện tượng bịa đặt thông tin.</li>
-                    <li><strong>Đưa ví dụ minh họa (Few-shot Prompting):</strong> Giúp AI hiểu rõ mong muốn thực tế của người dùng về định dạng đầu ra.</li>
-                </ul>
+                <div class="quest-book-box" style="border-color: var(--color-gold);">
+                    <h4>💡 Phân tích lý do Prompt nâng cao luôn hiệu quả vượt trội:</h4>
+                    <ul>
+                        <li><strong>Xác lập vai trò chuyên gia (Role):</strong> Ép AI tự hiệu chỉnh bộ thuật ngữ chuyên ngành phù hợp với vị thế.</li>
+                        <li><strong>Cấu trúc hóa rõ ràng (Chain of Thought):</strong> Định hướng cho AI suy luận từng bước, loại bỏ hiện tượng bịa đặt thông tin.</li>
+                        <li><strong>Đưa ví dụ minh họa (Few-shot Prompting):</strong> Giúp AI hiểu rõ mong muốn thực tế của người dùng về định dạng đầu ra.</li>
+                    </ul>
+                </div>
             `,
             p4: `
                 <div class="modal-signboard">
                     <h2 class="section-title" style="color:#fff;">🤝 BÀI 4: BÁO CÁO CỘNG TÁC SỐ TRÊN KHÔNG GIAN ẢO</h2>
                 </div>
-                <p><strong>Mục tiêu bài tập:</strong> Vượt qua các thách thức của việc làm việc trực tuyến từ xa, đồng bộ tiến trình của nhóm 6 để tối ưu hóa hiệu quả thực hiện dự án chung.</p>
+                
+                <div class="quest-book-box">
+                    <p><strong>Mục tiêu bài tập:</strong> Vượt qua các thách thức của việc làm việc trực tuyến từ xa, đồng bộ tiến trình của nhóm 6 để tối ưu hóa hiệu quả thực hiện dự án chung.</p>
+                </div>
 
                 <h4>🚨 Các thách thức nhóm gặp phải:</h4>
                 <ul>
@@ -1356,8 +1580,25 @@
                     <li><strong>Hạn chế tương tác cảm xúc:</strong> Việc chỉ nhắn tin văn bản dễ gây hiểu lầm do thiếu sắc thái giọng nói và cử chỉ cơ thể.</li>
                 </ul>
 
-                <h4>🛠️ Giải pháp và Mô hình Kanban thực tế của Nhóm 6:</h4>
-                <p>Tụi mình đã thiết lập bảng quản trị Trello và hệ sinh thái kết nối Google Docs/Google Meet để giải quyết triệt để.</p>
+                <h4>🛠️ Giải pháp và Bàn chế tạo trực quan (Nhóm 6):</h4>
+                <p>Tụi mình đã kết hợp các công cụ ảo lại để tạo nên sản phẩm hoàn thiện nhất.</p>
+
+                <!-- Crafting Grid simulation -->
+                <div class="crafting-container">
+                    <div class="crafting-grid">
+                        <div class="crafting-cell">Trello</div>
+                        <div class="crafting-cell">Docs</div>
+                        <div class="crafting-cell">Meet</div>
+                        <div class="crafting-cell">Zalo</div>
+                        <div class="crafting-cell">Chăm chỉ</div>
+                        <div class="crafting-cell">Chia sẻ</div>
+                        <div class="crafting-cell">Lắng nghe</div>
+                        <div class="crafting-cell">Kỷ luật</div>
+                        <div class="crafting-cell">Đồng hành</div>
+                    </div>
+                    <div class="crafting-arrow">➔</div>
+                    <div class="crafting-result">Dự Án Thành Công</div>
+                </div>
                 
                 <div class="kanban-board">
                     <div class="kanban-col">
@@ -1377,31 +1618,56 @@
                     </div>
                 </div>
 
-                <h4>💡 Bài học kinh nghiệm rút ra:</h4>
-                <p>Cộng tác trực tuyến hiệu quả không nằm ở việc nhắn tin liên tục, mà nằm ở việc định hình một quy trình làm việc trực quan, minh bạch và có tính kỷ luật cao.</p>
+                <div class="quest-book-box" style="border-color: var(--color-gold);">
+                    <h4>💡 Bài học kinh nghiệm rút ra:</h4>
+                    <p>Cộng tác trực tuyến hiệu quả không nằm ở việc nhắn tin liên tục, mà nằm ở việc định hình một quy trình làm việc trực quan, minh bạch và có tính kỷ luật cao.</p>
+                </div>
             `,
             p5: `
                 <div class="modal-signboard">
                     <h2 class="section-title" style="color:#fff;">🎨 BÀI 5: QUY TRÌNH THIẾT KẾ INFOGRAPHIC NGÔN NGỮ MẠNG</h2>
                 </div>
-                <p><strong>Mục tiêu bài tập:</strong> Ứng dụng tích hợp đa công cụ AI tạo sinh để nghiên cứu, sáng tạo nội dung và hoàn thiện một ấn phẩm truyền thông trực quan chất lượng cao về chủ đề: <em>"Ngôn ngữ mạng của giới trẻ trên MXH Việt Nam"</em>.</p>
+                
+                <div class="quest-book-box">
+                    <p><strong>Mục tiêu bài tập:</strong> Ứng dụng tích hợp đa công cụ AI tạo sinh để nghiên cứu, sáng tạo nội dung và hoàn thiện một ấn phẩm truyền thông trực quan chất lượng cao về chủ đề: <em>"Ngôn ngữ mạng của giới trẻ trên MXH Việt Nam"</em>.</p>
+                </div>
                 
                 <h4>🛠️ Quy trình triển khai 4 giai đoạn cốt lõi:</h4>
-                <ol>
-                    <li><strong>Giai đoạn 1: Lên ý tưởng & Bố cục (Claude):</strong> Sử dụng Claude để nghiên cứu số liệu khảo sát, phân tích tâm lý giới trẻ và lên bố cục 4 phần rõ ràng cho infographic.</li>
-                    <li><strong>Giai đoạn 2: Sáng tạo Prompt hình ảnh (ChatGPT):</strong> ChatGPT đóng vai trò là kỹ sư prompt dịch thuật mô tả hình ảnh sang tiếng Anh chi tiết kèm từ khóa kỹ thuật (Style anime, vibrant colors, neon glows, smartphone interface).</li>
-                    <li><strong>Giai đoạn 3: Sinh ảnh minh họa (Stable Diffusion):</strong> Đưa prompt vào Stable Diffusion để tạo ra các hình vẽ sống động về cuộc sống số của Gen Z.</li>
-                    <li><strong>Giai đoạn 4: Thiết kế & Hoàn thiện (Canva AI):</strong> Kết hợp toàn bộ tài nguyên hình ảnh sinh ra từ AI để ráp vào khung thiết kế Canva, phối các gam màu tím hồng năng động và hiệu chỉnh thủ công các đoạn văn bản.</li>
-                </ol>
+                <div class="pipeline-holder">
+                    <div class="pipeline-node">
+                        <strong>Claude</strong>
+                        <span>Giai đoạn 1: Lên ý tưởng & cấu trúc dữ liệu thô</span>
+                    </div>
+                    <div class="pipeline-arrow">➔</div>
+                    <div class="pipeline-node">
+                        <strong>ChatGPT</strong>
+                        <span>Giai đoạn 2: Biên dịch prompt mô tả tranh vẽ</span>
+                    </div>
+                    <div class="pipeline-arrow">➔</div>
+                    <div class="pipeline-node">
+                        <strong>Stable Diffusion</strong>
+                        <span>Giai đoạn 3: Sinh họa tiết thiết kế visual</span>
+                    </div>
+                    <div class="pipeline-arrow">➔</div>
+                    <div class="pipeline-node">
+                        <strong>Canva AI</strong>
+                        <span>Giai đoạn 4: Hoàn tất dàn dựng layout</span>
+                    </div>
+                </div>
 
-                <h4>📌 Nhận xét sâu sắc về giới hạn thẩm mỹ của AI:</h4>
-                <p>Dù Stable Diffusion và Canva AI rất nhanh nhưng chất lượng chi tiết đôi khi bị lỗi hoặc bố cục còn mang tính rập khuôn, thiếu cá tính hóa. Để có một infographic chuẩn mực học thuật và có chiều sâu thẩm mỹ, con người bắt buộc phải trực tiếp biên tập nội dung, chọn lọc và tinh chỉnh từng điểm ảnh một cách có chủ đích.</p>
+                <div class="quest-book-box" style="border-color: var(--color-gold);">
+                    <h4>📌 Nhận xét sâu sắc về giới hạn thẩm mỹ của AI:</h4>
+                    <p>Dù Stable Diffusion và Canva AI rất nhanh nhưng chất lượng chi tiết đôi khi bị lỗi hoặc bố cục còn mang tính rập khuôn, thiếu cá tính hóa. Để có một infographic chuẩn mực học thuật và có chiều sâu thẩm mỹ, con người bắt buộc phải trực tiếp biên tập nội dung, chọn lọc và tinh chỉnh từng điểm ảnh một cách có chủ đích.</p>
+                </div>
             `,
             p6: `
                 <div class="modal-signboard">
                     <h2 class="section-title" style="color:#fff;">🛡️ BÀI 6: AN TOÀN VÀ LIÊM CHÍNH HỌC THUẬT TRONG THỜI ĐẠI AI</h2>
                 </div>
-                <p><strong>Mục tiêu bài tập:</strong> Tìm hiểu khung chính sách kiểm soát đạo văn, thực nghiệm tính chính xác dữ liệu của AI và xây dựng bộ quy tắc ứng xử đạo đức số cho cá nhân.</p>
+                
+                <div class="quest-book-box">
+                    <p><strong>Mục tiêu bài tập:</strong> Tìm hiểu khung chính sách kiểm soát đạo văn, thực nghiệm tính chính xác dữ liệu của AI và xây dựng bộ quy tắc ứng xử đạo đức số cho cá nhân.</p>
+                </div>
 
                 <h4>📑 Tóm tắt quy định liêm chính học thuật (Tham khảo UEH):</h4>
                 <ul>
@@ -1477,10 +1743,6 @@
             document.getElementById('project-modal').style.display = 'none';
             document.body.style.overflow = '';
         }
-
-        window.addEventListener('keydown', (e) => {
-            if(e.key === 'Escape') closeModal();
-        });
 
         // Render Source Swapper (Task 2)
         function renderSourceSwapper() {
