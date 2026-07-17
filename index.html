@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chu Quang Đại - Digital Portfolio</title>
+    <title>Chu Quang Đại Portfolio</title>
     <!-- Nhúng Font chữ hiển thị chuẩn chỉ dấu tiếng Việt -->
     <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Quicksand:wght@600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -22,10 +22,29 @@
             --mc-border-light: #dbdbdb;
             --mc-btn-bg: #8f8f8f;
             --transition-speed: 0.3s;
+
+            /* Dynamic Theme Variables for High Contrast Night Mode */
+            --color-block-bg: #e5dac2;
+            --color-quest-bg: #f7eed8;
+            --color-modal-bg: #c6c6c6;
+            --color-table-bg: #e2dac6;
+            --color-table-text: #23160c;
+            --color-table-row-even: rgba(251, 246, 236, 0.4);
+            --color-swapper-bg: #b8b8b8;
+            --color-swapper-body: #f4edd8;
+            --color-swapper-text: #2c1e12;
+            --color-step-item-bg: rgba(255, 255, 255, 0.4);
+            --color-step-check-bg: #fff;
+            --color-kanban-bg: #c6c6c6;
+            --color-kanban-item: #fff;
+            --color-pipeline-bg: rgba(255, 255, 255, 0.4);
+            --color-pipeline-node: #ebdcb9;
+            --color-code-bg: #1c1510;
+            --color-code-text: #f5edd6;
         }
 
         .night-mode {
-            --color-wood-cream: #20272c;
+            --color-wood-cream: #141a1e;
             --color-glow: #4fff84;
             --color-leaf-bright: #328e5e;
             --color-text-dark: #ebdcb9;
@@ -33,6 +52,25 @@
             --color-glass: rgba(12, 17, 21, 0.88);
             --color-wood-dark: #101518;
             --color-wood-light: #384956;
+
+            /* Adaptive Dark Mode Block Overrides */
+            --color-block-bg: #222a31;
+            --color-quest-bg: #1b2226;
+            --color-modal-bg: #1c2429;
+            --color-table-bg: #252e35;
+            --color-table-text: #f0e6d2;
+            --color-table-row-even: rgba(43, 51, 58, 0.4);
+            --color-swapper-bg: #1c2429;
+            --color-swapper-body: #252e35;
+            --color-swapper-text: #f0e6d2;
+            --color-step-item-bg: rgba(33, 41, 47, 0.5);
+            --color-step-check-bg: #1b2226;
+            --color-kanban-bg: #1b2226;
+            --color-kanban-item: #252e35;
+            --color-pipeline-bg: rgba(33, 41, 47, 0.5);
+            --color-pipeline-node: #252e35;
+            --color-code-bg: #0d1114;
+            --color-code-text: #e2dac6;
         }
 
         * {
@@ -415,21 +453,14 @@
 
         /* Questbook Style Paragraph Frame */
         .quest-book-box {
-            background: #f7eed8;
-            border: 4px solid #3c3c3c;
+            background: var(--color-quest-bg);
+            border: 4px solid var(--color-wood-dark);
             padding: 24px;
             box-shadow: inset 4px 4px 0px #fff, inset -4px -4px 0px #c6bba4, 4px 4px 0px rgba(0,0,0,0.1);
-            color: #2a1b0c;
+            color: var(--color-text-dark);
             margin-bottom: 20px;
             border-radius: 2px;
-            transition: background var(--transition-speed);
-        }
-
-        .night-mode .quest-book-box {
-            background: #2b333a;
-            box-shadow: inset 4px 4px 0px #414c56, inset -4px -4px 0px #1a2024;
-            color: #dbdbdb;
-            border-color: #12181d;
+            transition: background var(--transition-speed), color var(--transition-speed), border-color var(--transition-speed);
         }
 
         .drop-cap {
@@ -505,18 +536,14 @@
         }
 
         .project-block {
-            background: #e5dac2;
+            background: var(--color-block-bg);
             border: 4px solid var(--color-wood-dark);
             padding: 24px;
             display: flex;
             flex-direction: column;
             gap: 14px;
-            transition: transform 0.2s, box-shadow 0.2s, background var(--transition-speed);
+            transition: transform 0.2s, box-shadow 0.2s, background var(--transition-speed), border-color var(--transition-speed);
             box-shadow: 0 6px 0px rgba(0,0,0,0.2);
-        }
-
-        .night-mode .project-block {
-            background: #343d46;
         }
 
         .project-block:hover {
@@ -604,7 +631,7 @@
         }
 
         .modal-wrapper {
-            background: #c6c6c6;
+            background: var(--color-modal-bg);
             border: 6px solid #555;
             border-top-color: #dbdbdb;
             border-left-color: #dbdbdb;
@@ -618,6 +645,7 @@
             padding: 35px;
             box-shadow: 0 15px 0px rgba(0,0,0,0.6);
             animation: blockPop 0.25s cubic-bezier(0.1, 0.8, 0.3, 1.2) forwards;
+            transition: background var(--transition-speed);
         }
 
         @keyframes blockPop {
@@ -698,9 +726,10 @@
         .pixel-table {
             width: 100%;
             border-collapse: collapse;
-            background: #e2dac6;
+            background: var(--color-table-bg);
             font-size: 13.5px;
             text-align: left;
+            transition: background var(--transition-speed);
         }
 
         .pixel-table th {
@@ -714,19 +743,22 @@
         .pixel-table td {
             padding: 10px;
             border-bottom: 1px solid rgba(60, 47, 47, 0.15);
-            color: var(--color-text-dark);
+            color: var(--color-table-text);
+            transition: color var(--transition-speed);
         }
 
         .pixel-table tr:nth-child(even) {
-            background: rgba(251, 246, 236, 0.4);
+            background: var(--color-table-row-even);
+            transition: background var(--transition-speed);
         }
 
         /* Source Swapper Grid Layout - Styled like Inventory slots */
         .swapper-panel {
-            background: #b8b8b8;
+            background: var(--color-swapper-bg);
             border: 4px solid #3c3c3c;
             padding: 15px;
             margin: 15px 0;
+            transition: background var(--transition-speed);
         }
 
         .swapper-header {
@@ -762,10 +794,11 @@
         .swapper-body {
             font-size: 14px;
             line-height: 1.6;
-            background: #f4edd8;
+            background: var(--color-swapper-body);
             border: 3px solid #3c3c3c;
             padding: 15px;
-            color: #2c1e12;
+            color: var(--color-swapper-text);
+            transition: background var(--transition-speed), color var(--transition-speed);
         }
 
         /* Step checklist styling for Task 1 */
@@ -780,10 +813,10 @@
             display: flex;
             align-items: flex-start;
             gap: 12px;
-            background: rgba(255, 255, 255, 0.4);
+            background: var(--color-step-item-bg);
             border: 3px solid var(--color-wood-dark);
             padding: 14px 16px;
-            transition: all 0.15s ease;
+            transition: all 0.15s ease, background var(--transition-speed), border-color var(--transition-speed);
         }
 
         .checklist-item:hover {
@@ -794,7 +827,7 @@
         .check-box {
             width: 22px;
             height: 22px;
-            background: #fff;
+            background: var(--color-step-check-bg);
             border: 3px solid var(--color-wood-dark);
             flex-shrink: 0;
             margin-top: 2px;
@@ -804,6 +837,7 @@
             font-weight: bold;
             font-size: 12px;
             color: var(--color-leaf-bright);
+            transition: background var(--transition-speed), border-color var(--transition-speed);
         }
 
         .check-content {
@@ -820,9 +854,10 @@
         }
 
         .kanban-col {
-            background: #c6c6c6;
+            background: var(--color-kanban-bg);
             border: 3px solid #555;
             padding: 10px;
+            transition: background var(--transition-speed);
         }
 
         .kanban-col-title {
@@ -835,12 +870,14 @@
         }
 
         .kanban-item {
-            background: #fff;
+            background: var(--color-kanban-item);
             border: 3px solid #000;
             padding: 8px;
             font-size: 12px;
             margin-bottom: 8px;
-            box-shadow: inset -2px -2px 0px #dbdbdb;
+            box-shadow: inset -2px -2px 0px #555;
+            color: var(--color-text-dark);
+            transition: background var(--transition-speed), color var(--transition-speed);
         }
 
         /* Crafting Grid Simulation */
@@ -904,31 +941,34 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(255, 255, 255, 0.4);
+            background: var(--color-pipeline-bg);
             border: 3px solid var(--color-wood-dark);
             padding: 15px;
             margin: 20px 0;
             gap: 10px;
             flex-wrap: wrap;
+            transition: background var(--transition-speed), border-color var(--transition-speed);
         }
 
         .pipeline-node {
-            background: #ebdcb9;
+            background: var(--color-pipeline-node);
             border: 3px solid var(--color-wood-dark);
             padding: 8px 12px;
             border-radius: 4px;
             text-align: center;
             flex-grow: 1;
+            transition: background var(--transition-speed), border-color var(--transition-speed);
         }
 
         .pipeline-node strong {
             display: block;
             font-size: 13px;
-            color: var(--color-leaf-dark);
+            color: var(--color-leaf-bright);
         }
 
         .pipeline-node span {
             font-size: 11px;
+            color: var(--color-text-dark);
         }
 
         /* Prompt Sandbox styling */
@@ -959,8 +999,8 @@
         }
 
         .sandbox-code-block {
-            background: #1c1510;
-            color: #f5edd6;
+            background: var(--color-code-bg);
+            color: var(--color-code-text);
             padding: 15px;
             border: 3px solid var(--color-wood-dark);
             font-family: monospace;
@@ -968,6 +1008,7 @@
             white-space: pre-wrap;
             margin-bottom: 10px;
             line-height: 1.5;
+            transition: background var(--transition-speed), color var(--transition-speed), border-color var(--transition-speed);
         }
 
         .comparison-layout {
@@ -1053,7 +1094,7 @@
                     <span class="tag">🎓 Trường Đại học Ngoại ngữ - ĐHQGHN</span>
                 </div>
                 <p style="color: #ebdcb9; font-size: 14.5px; margin-top: 8px; line-height: 1.6;">
-                    Chào bạn! Mình là Đại. Là một sinh viên chuyên ngành ngôn ngữ tại ULIS, mình luôn khao khát kết hợp ngôn từ cổ điển với nhịp thở số hiện đại. Digital Portfolio này chính là một hòm kho báu nhỏ lưu giữ hành trình rèn luyện, ứng dụng công nghệ thực tế và sự đồng hành của AI có trách nhiệm của riêng mình.
+                    Xin chào! Mình là Chu Quang Đại, sinh viên năm nhất ngành Ngôn ngữ và Văn hóa Trung Quốc tại Trường Đại học Ngoại ngữ – Đại học Quốc gia Hà Nội. Mình có niềm yêu thích với tiếng Trung và văn hóa Trung Quốc, đồng thời luôn chủ động học hỏi để phát triển cả kiến thức chuyên môn lẫn kỹ năng mềm. Mình mong muốn tích lũy thêm nhiều kinh nghiệm thực tế, nâng cao năng lực giao tiếp, làm việc nhóm và đóng góp giá trị trong môi trường học tập cũng như công việc. Digital Portfolio này chính là một hòm kho báu nhỏ lưu giữ hành trình rèn luyện, ứng dụng công nghệ thực tế và sự đồng hành của AI trên hành trình trưởng thành của mình
                 </p>
             </div>
         </header>
@@ -1185,25 +1226,26 @@
                 
                 <!-- Cozy Parchment Style Box for Reflection -->
                 <div class="quest-book-box">
-                    <span class="status-badge badge-success">🧠 Steve's Knowledge</span>
-                    <h3 style="font-size: 16.5px; font-weight: 800; color: var(--color-wood-dark); margin-bottom: 12px;">✅ Thuận lợi trong quá trình thực hiện:</h3>
+                    <span class="status-badge badge-success">🏮 CẢM XÚC CÁ NHÂN</span>
+                    <h3 style="font-size: 16.5px; font-weight: 800; color: var(--color-wood-dark); margin-bottom: 12px;">Trải nghiệm và cảm xúc cá nhân:</h3>
                     <p>
-                        Mình may mắn được tiếp cận các công cụ số cực kỳ trực quan và mạnh mẽ (Google Workspace, Trello, Canvas). Giáo trình và định hướng học tập của giảng viên rất khoa học, từng bài thực hành đều có liên kết trực tiếp để giải quyết các bài toán ngôn ngữ thực tế. Sự phát triển vượt trội của các dòng mô hình ngôn ngữ lớn (Claude, ChatGPT) cũng giúp mình dễ dàng tìm kiếm ý tưởng phân tích ban đầu.
+                        Học phần Nhập môn Công nghệ số và Ứng dụng Trí tuệ nhân tạo đã mang đến cho em nhiều trải nghiệm mới và bổ ích. Trước đây, em chỉ sử dụng AI để tìm kiếm thông tin đơn giản, nhưng sau học phần, em hiểu rõ hơn về vai trò của công nghệ số và trí tuệ nhân tạo trong học tập, công việc và cuộc sống. Đặc biệt, em được thực hành viết prompt, sử dụng các công cụ AI, thiết kế nội dung và làm quen với các nền tảng như Google Docs, Google Sheets, Google Slides, Google Forms và Google Drive để hỗ trợ học tập, làm việc nhóm và quản lý tài liệu. Những trải nghiệm này giúp em hứng thú hơn với việc ứng dụng công nghệ vào thực tế.
                     </p>
                 </div>
 
                 <div class="quest-book-box">
-                    <span class="status-badge badge-warning">💥 Creeper Threat</span>
-                    <h3 style="font-size: 16.5px; font-weight: 800; color: var(--color-wood-dark); margin-bottom: 12px;">⚠️ Khó khăn đã phải đối diện:</h3>
+                    <span class="status-badge badge-success">⚔️ KIẾN THỨC & KỸ NĂNG</span>
+                    <h3 style="font-size: 16.5px; font-weight: 800; color: var(--color-wood-dark); margin-bottom: 12px;">Kiến thức và kỹ năng:</h3>
                     <p>
-                        Việc viết prompt chuẩn xác ban đầu rất khó, đôi khi AI đưa ra câu trả lời sai lệch (ảo tưởng dữ liệu) khiến mình mất khá nhiều thời gian để đối chiếu chéo. Ngoài ra, việc duy trì sự gắn kết và phân chia trách nhiệm rõ ràng khi làm việc nhóm từ xa đôi lúc bị trễ nhịp do thói quen bất đồng bộ thời gian của các thành viên.
+                        Qua học phần, em đã tiếp thu được nhiều kiến thức và kỹ năng quan trọng. Em hiểu cách sử dụng AI hiệu quả thông qua việc xây dựng prompt rõ ràng, biết kiểm chứng và chọn lọc thông tin thay vì phụ thuộc hoàn toàn vào AI. Bên cạnh đó, em nâng cao kỹ năng sử dụng các công cụ số để soạn thảo văn bản, xử lý dữ liệu, thiết kế bài thuyết trình, tạo biểu mẫu khảo sát và lưu trữ tài liệu trên nền tảng đám mây. Học phần cũng giúp em rèn luyện kỹ năng làm việc nhóm, tư duy giải quyết vấn đề và khả năng thích nghi với môi trường học tập số.
                     </p>
                 </div>
 
                 <div class="quest-book-box" style="border-color: var(--color-gold);">
-                    <h3 style="font-size: 16.5px; font-weight: 800; color: var(--color-wood-dark); margin-bottom: 12px;">💡 Bài học kinh nghiệm xương máu:</h3>
+                    <span class="status-badge badge-warning">🛡️ BÀI HỌC KINH NGHIỆM</span>
+                    <h3 style="font-size: 16.5px; font-weight: 800; color: var(--color-wood-dark); margin-bottom: 12px;">Bài học kinh nghiệm:</h3>
                     <p>
-                        Công nghệ chỉ thực sự mạnh khi có sự định hướng thông thái của con người. Đối với một sinh viên Ngoại ngữ, bài học lớn nhất là phải rèn luyện tư duy phản biện liên tục, không được sao chép máy móc bất kỳ kết quả nào của AI. Sự chỉnh chu, sạch sẽ trong việc sắp xếp thư mục và quản lý thông tin chính là gốc rễ quyết định tiến độ của bất cứ dự án phức tạp nào trong tương lai.
+                        Sau khi hoàn thành học phần, em nhận thấy giá trị cốt lõi mà mình đạt được không chỉ là biết sử dụng các công cụ công nghệ mà còn là hình thành tư duy số, tinh thần tự học và ý thức ứng dụng AI một cách có trách nhiệm. Em hiểu rằng AI là công cụ hỗ trợ, còn con người vẫn giữ vai trò quyết định trong việc phân tích, đánh giá và sáng tạo. Những kiến thức và kỹ năng này sẽ là nền tảng quan trọng giúp em học tập hiệu quả hơn, đồng thời chuẩn bị tốt cho công việc và sự phát triển bản thân trong thời đại chuyển đổi số.
                     </p>
                 </div>
             </div>
@@ -1695,14 +1737,14 @@
         const articlesDb = [
             { id: 1, title: "An analysis of grammatical errors in the Chinese proficiency oral test...", author: "Nguyễn, Đ. H.", year: "2023", journal: "VNU Journal of Foreign Studies", method: "Thực nghiệm, phân tích lỗi", impact: "Trung bình", update: "Cao", detail: "Phân tích có hệ thống các lỗi ngữ pháp thực tế của sinh viên Việt Nam trong kỳ thi nói tiếng Trung. Tài liệu có giá trị đối chiếu thực tiễn cực kỳ cao." },
             { id: 2, title: "A survey on common errors made by Vietnamese students in learning Chinese", author: "Đỗ, T. P.", year: "2018", journal: "Tạp chí Ngôn ngữ và Văn hóa", method: "Khảo sát, tổng hợp", impact: "Trung bình", update: "Trung bình", detail: "Khảo sát diện rộng về các thói quen sử dụng sai ngữ pháp do hiểu sai logic ngôn ngữ mẹ đẻ." },
-            { id: 3, title: "Phân tích lỗi sử dụng '什么' của người học Việt Nam", author: "Đỗ, H. N.", year: "2023", journal: "TNU Journal of Science and Technology", method: "Nghiên cứu trường hợp", impact: "Thấp - trung bình", update: "Cao", detail: "Nghiên cứu chuyên sâu về lỗi dùng đại từ nghi vấn trong các ngữ cảnh khẳng định và giả định." },
+            { id: 3, title: "Phân tích lỗi sử dụng '...'", author: "Đỗ, H. N.", year: "2023", journal: "TNU Journal of Science and Technology", method: "Nghiên cứu trường hợp", impact: "Thấp - trung bình", update: "Cao", detail: "Nghiên cứu chuyên sâu về lỗi dùng đại từ nghi vấn trong các ngữ cảnh khẳng định và giả định." },
             { id: 4, title: "The study of second language acquisition", author: "Ellis, R.", year: "2008", journal: "Oxford University Press", method: "Tổng hợp lý thuyết", impact: "Rất cao", update: "Trung bình", detail: "Tác phẩm kinh điển về lý thuyết tiếp thu ngôn ngữ thứ hai, là nền tảng để phân tích hiện tượng chuyển di ngôn ngữ." },
             { id: 5, title: "Teaching and learning grammar", author: "Larsen-Freeman, D.", year: "2014", journal: "Oxford University Press", method: "Lý thuyết + phương pháp", impact: "Cao", update: "Cao", detail: "Đề xuất các phương pháp tiếp cận ngữ pháp tương tác, học trong ngữ cảnh thay vì học thuộc máy móc." },
             { id: 6, title: "Language transfer: Cross-linguistic influence in language learning", author: "Odlin, T.", year: "1989", journal: "Cambridge University Press", method: "Lý thuyết nền tảng", impact: "Rất cao", update: "Thấp", detail: "Phân tích chuyên sâu về sự ảnh hưởng của tiếng mẹ đẻ lên việc tiếp thu ngôn ngữ đích." },
             { id: 7, title: "Modern Mandarin Chinese grammar: A practical guide", author: "Ross, C. & Ma, J.", year: "2006", journal: "Routledge", method: "Mô tả ngữ pháp", impact: "Cao", update: "Trung bình", detail: "Sách công cụ hệ thống hóa toàn bộ các điểm ngữ pháp tiếng Trung hiện đại một cách trực quan." },
             { id: 8, title: "Teaching and learning Chinese as a foreign language", author: "Xing, J. Z.", year: "2006", journal: "Hong Kong University Press", method: "Ứng dụng giảng dạy", impact: "Cao", update: "Trung bình", detail: "Đề xuất các hướng tiếp cận sư phạm mới để truyền tải cấu trúc tiếng Trung cho người nước ngoài." },
             { id: 9, title: "The acquisition of Chinese grammar", author: "Yang, C.", year: "2016", journal: "Journal of Chinese Linguistics", method: "Nghiên cứu học thuật", impact: "Cao", update: "Cao", detail: "Nghiên cứu thực nghiệm về quá trình hình thành tư duy ngữ pháp tiếng Trung của người học phi bản xứ." },
-            { id: 10, title: "Chinese: A comprehensive grammar (2nd ed.)", author: "Yip, P. & Rimmington, D.", year: "2015", journal: "Routledge", method: "Mô tả + tham khảo", impact: "Cao", update: "Cao", detail: "Cuốn ngữ pháp toàn diện nhất, giải thích tỉ mỉ các hiện tượng câu chữ đặc biệt như câu chữ 把 và 被." }
+            { id: 10, title: "Chinese: A comprehensive grammar (2nd ed.)", author: "Yip, P. & Rimmington, D.", year: "2015", journal: "Routledge", method: "Mô tả + tham khảo", impact: "Cao", update: "Cao", detail: "Cuốn ngữ pháp toàn diện nhất, giải thích tỉ mỉ các hiện tượng câu chữ đặc biệt như câu chữ 把 và bị." }
         ];
 
         const promptsDb = [
@@ -1744,6 +1786,10 @@
             document.body.style.overflow = '';
         }
 
+        window.addEventListener('keydown', (e) => {
+            if(e.key === 'Escape') closeModal();
+        });
+
         // Render Source Swapper (Task 2)
         function renderSourceSwapper() {
             const tbody = document.getElementById('source-table-body');
@@ -1779,7 +1825,7 @@
                 <p><strong>Tiêu đề:</strong> ${art.title}</p>
                 <p><strong>Tác giả:</strong> ${art.author} (${art.year}) | <strong>Nguồn:</strong> ${art.journal}</p>
                 <p><strong>Phương pháp:</strong> ${art.method} | <strong>Mức độ ảnh hưởng:</strong> ${art.impact}</p>
-                <p style="background: var(--color-wood-cream); padding: 10px; border-left: 4px solid var(--color-wood-light);">
+                <p style="background: var(--color-swapper-body); padding: 10px; border-left: 4px solid var(--color-wood-light);">
                     <strong>Chi tiết đánh giá:</strong> ${art.detail}
                 </p>
             `;
